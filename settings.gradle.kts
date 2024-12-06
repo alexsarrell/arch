@@ -1,4 +1,7 @@
 rootProject.name = "cor4al"
 
 include(":core")
-include(":generator")
+include(":generator:gradle")
+findProject("generator:gradle")?.name = "generator-gradle"
+include(":generator:kotlin")
+findProject("generator:kotlin")?.name = "generator-kotlin"

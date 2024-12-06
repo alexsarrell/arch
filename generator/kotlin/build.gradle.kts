@@ -1,11 +1,11 @@
 plugins {
     `kotlin-configuration`
-    id("org.jetbrains.kotlin.plugin.serialization") version Versions.kotlinVersion
 }
 
 dependencies {
-    implementation("com.charleskorn.kaml:kaml:0.55.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation(project(":core"))
+    implementation(kotlin("gradle-plugin", Versions.kotlinVersion))
+    implementation(gradleApi())
 
     implementation("org.jetbrains.kotlin:kotlin-script-runtime:1.8.0")
     implementation("org.jetbrains.kotlin:kotlin-script-util:1.8.0")
