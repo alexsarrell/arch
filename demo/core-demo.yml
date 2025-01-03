@@ -1,0 +1,59 @@
+settings:
+  name: core
+
+schemas:
+  AnalyticsDocument:
+    description: Class for analytics holding
+    type: data
+    properties:
+      name:
+        type: String
+        description: Name of the event
+        version: 1.0.0
+        required: true
+      accountId:
+        type: String
+        format: uuid
+        description: ID of the event
+        version: 1.0.0
+        required: true
+      metadata:
+        type: String # TODO добавить нормальную поддержку кастомных типов без необходимости объяв
+        description: Metadata of the event
+        default: emptyMap<String, Any>
+        version: 1.0.0
+        required: true
+      event:
+        type: AnalyticsEvent
+        description: Body of analytics event
+        version: 1.0.0
+        required: true
+    version: 2.0.0
+
+  AnalyticsEvent:
+    type: data
+    description: event sending on
+    properties:
+      name:
+        type: String
+        description: Name of the event
+        version: 1.0.0
+        required: true
+      sessionId:
+        type: String
+        description: Session ID
+        version: 1.0.0
+        required: true
+    version: 1.0.0
+
+  ChildEvent:
+    type: data
+    parent: '#/AnalyticsEvent'
+    description: event sending on
+    properties:
+      childProperty:
+        type: String
+        description: Name of the event
+        version: 1.0.0
+        required: true
+    version: 1.0.0

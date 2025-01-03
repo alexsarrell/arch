@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Spec(
-    val settings: SettingsDefinition,
-    val schemas: SchemaDefinition,
+    val settings: SchemaSettings,
+    val schemas: Map<String, Schema>,
 )

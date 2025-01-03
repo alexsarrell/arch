@@ -1,5 +1,6 @@
 plugins {
     `kotlin-configuration`
+    `maven-publish`
     id("org.jetbrains.kotlin.plugin.serialization") version Versions.kotlinVersion
 }
 
@@ -10,4 +11,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-script-runtime:1.8.0")
     implementation("org.jetbrains.kotlin:kotlin-script-util:1.8.0")
     implementation("org.jetbrains.kotlin:kotlin-compiler:1.8.0")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
 }

@@ -8,11 +8,12 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+@Deprecated("Ненужное усложнение")
 class VersionSerializer : KSerializer<Version> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("version", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): Version {
-        val value = decoder.decodeString().split("\\.")
+        val value = decoder.decodeString().split(".")
 
         val major = value[0].toInt()
         val minor = value[1].toInt()
