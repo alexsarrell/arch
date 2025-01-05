@@ -1,12 +1,10 @@
 class {{className}}({{#each properties}}
     /**
-    * Description: {{description}}
-    * Since: {{version}}
+    * @since {{version}}
     */
     {{#if isOpen}}open {{/if}}val {{name}}: {{type}}{{#unless required}}?{{/unless}}{{#if defaultValue}} = {{defaultValue}}{{/if}},{{/each}}{{#each parentProperties}}
     /**
-    * Description: {{description}}
-    * Since: {{version}}
+    * @since {{version}}
     */
     override val {{name}}: {{type}}{{#unless required}}?{{/unless}}{{#if defaultValue}} = {{defaultValue}}{{/if}},{{/each}}
 ){{#if parent}}: {{parent}}({{#each parentProperties}}

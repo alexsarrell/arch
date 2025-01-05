@@ -7,5 +7,5 @@ interface SpecParser {
 
     fun context(): PipeContext
 
-    fun loadSpecs(specs: Set<File>, specsLimit: List<String>)
+    fun parse(specs: Set<File>, specsLimit: List<String>)
 }

@@ -22,7 +22,6 @@ and register the Gradle task Cor4alGenerateTask:
 ```kotlin
 
 tasks.register<Cor4alGenerateTask>("cor4alGenerate") {
-    mode.set("unsafe")
     specSource.set(project.file(".").absolutePath)
     outputDir.set("${project.layout.buildDirectory.get()}/generated")
     packageName.set("com.alexsarrell.demo")

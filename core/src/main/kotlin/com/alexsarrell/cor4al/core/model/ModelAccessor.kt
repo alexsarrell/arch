@@ -1,7 +1,8 @@
 package com.alexsarrell.cor4al.core.model
 
+import com.alexsarrell.cor4al.core.model.ModelAccessor.MetadataEntry
 import com.alexsarrell.cor4al.core.model.ModelAccessor.ModelProperty
-import com.alexsarrell.cor4al.core.pipeline.context.GenerationContext
+import com.alexsarrell.cor4al.core.pipeline.context.PipelineContext
 import com.alexsarrell.cor4al.core.pipeline.context.packageName
 import com.alexsarrell.cor4al.core.pipeline.context.parentPackage
 import com.alexsarrell.cor4al.core.pipeline.pipe.context.ClassSchema
@@ -9,6 +10,7 @@ import com.alexsarrell.cor4al.core.pipeline.context.typeMappings
 
 data class ModelAccessor(
     val className: String,
+    val description: String?,
     val parent: String?,
     val parentProperties: List<ModelProperty>,
     val version: String,
@@ -33,24 +35,23 @@ data class ModelAccessor(
         val defaultValue: String? = null,
     )
 
-    constructor(schema: ClassSchema, context: GenerationContext) :
+    constructor(schema: ClassSchema, context: PipelineContext) :
         this(
             className = schema.first,
             parent = schema.second.parent?.className,
             version = schema.second.version,
             properties = schema.second.properties.toModelProperties(),
             parentProperties = schema.second.extractParentFields().toModelProperties(),
-            packageName = context.packageName!!,
-            isOpen =
-                when (schema.second.type) {
-                    SchemaType.ABSTRACT -> true
-                    else -> false
-                },
+            packageName = context.packageName,
+            isOpen = schema.second.isOpen(),
             parentPackage = context.parentPackage,
             imports = schema.second.imports(context),
-            metadata = schema.second.metadata?.map { MetadataEntry(it.key, it.value) },
+            metadata = schema.second.metadata?.toMetadataEntry(),
+            description = schema.second.description,
         )
 }
+
+private fun Map<String, String>.toMetadataEntry() = map { MetadataEntry(it.key, it.value) }
 
 private fun Schema.extractParentFields(): Map<String, SchemaProperty> {
     val fields = mutableMapOf<String, SchemaProperty>()
@@ -77,6 +78,13 @@ private fun Map<String, SchemaProperty>.toModelProperties(): List<ModelProperty>
         )
     }
 
-private fun Schema.imports(context: GenerationContext): List<String> =
-    properties.values.mapNotNull { context.typeMappings?.get(it.type) } +
-        extractParentFields().values.mapNotNull { context.typeMappings?.get(it.type) }
+private fun Schema.imports(context: PipelineContext): List<String> =
+    properties.values.mapNotNull { context.typeMappings[it.type] } +
+        extractParentFields().values.mapNotNull { context.typeMappings[it.type] }
+
+private fun Schema.isOpen(): Boolean {
+    return when (type) {
+        SchemaType.ABSTRACT -> true
+        else -> false
+    }
+}

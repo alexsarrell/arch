@@ -41,7 +41,7 @@ abstract class AbstractYamlParser(
         return parseResult
     }
 
-    override fun loadSpecs(
+    override fun parse(
         specs: Set<File>,
         specsLimit: List<String>,
     ) {

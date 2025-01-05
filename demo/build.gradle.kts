@@ -12,7 +12,6 @@ dependencies {
 
 tasks.register<Cor4alGenerateTask>("cor4alGenerate") {
     doNotTrackState("If you want to always regenerate model classes")
-    mode.set("unsafe")
     specSource.set(project.file(".").absolutePath)
     outputDir.set("${project.layout.buildDirectory.get()}/generated")
     packageName.set("com.alexsarrell.demo")

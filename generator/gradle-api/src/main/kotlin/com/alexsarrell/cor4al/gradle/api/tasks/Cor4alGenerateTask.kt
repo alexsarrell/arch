@@ -38,9 +38,6 @@ abstract class Cor4alGenerateTask : DefaultTask() {
     @get:Nullable
     abstract val parentPackage: Property<String>
 
-    @get:Input
-    abstract val mode: Property<String>
-
     @get:Internal
     abstract val pipelineStarter: Property<GradleGenerationPipelineStarter>
 

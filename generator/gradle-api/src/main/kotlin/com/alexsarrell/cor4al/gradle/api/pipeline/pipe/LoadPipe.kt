@@ -1,12 +1,13 @@
 package com.alexsarrell.cor4al.gradle.api.pipeline.pipe
 
-import com.alexsarrell.cor4al.core.pipeline.context.GenerationContext
+import com.alexsarrell.cor4al.core.pipeline.context.PipelineContext
 import com.alexsarrell.cor4al.core.pipeline.pipe.StandalonePipe
 import com.alexsarrell.cor4al.core.pipeline.pipe.context.PipeContext
 import com.alexsarrell.cor4al.gradle.api.io.ConfigurationFileLoader
 import com.alexsarrell.cor4al.gradle.api.io.FileLoaderAccessor
 import com.alexsarrell.cor4al.gradle.api.io.RootFileLoader
-import com.alexsarrell.cor4al.gradle.api.pipeline.pipe.context.LoadPipeContext
+import com.alexsarrell.cor4al.core.pipeline.pipe.context.LoadPipeContext
+import com.alexsarrell.cor4al.core.pipeline.pipe.context.specFiles
 import com.alexsarrell.cor4al.gradle.api.tasks.Cor4alGenerateTask
 import java.io.InputStreamReader
 import java.net.URI
@@ -14,7 +15,7 @@ import java.nio.file.FileSystems
 import java.nio.file.Files
 
 class LoadPipe(
-    context: GenerationContext,
+    context: PipelineContext,
     private val task: Cor4alGenerateTask,
 ) : StandalonePipe() {
     override val pipeContext: PipeContext = LoadPipeContext(context)
@@ -26,9 +27,7 @@ class LoadPipe(
     override fun process() {
         pipeContext as LoadPipeContext
         val specSource = task.specSource.get()
-        val result = accessor.getLoader(specSource).get(specSource, task.project)
-        pipeContext.specFiles = result
-        pipeContext.templates = loadTemplates("templates")
+        pipeContext.specFiles = accessor.getLoader(specSource).get(specSource, task.project)
     }
 
     private fun loadTemplates(resourcePath: String): Map<String, String> {
