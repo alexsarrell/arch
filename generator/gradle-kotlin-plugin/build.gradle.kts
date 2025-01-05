@@ -5,6 +5,7 @@ plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
     `maven-publish`
+    id("com.alexsarrell.cor4al.generator") version "0.1.0"
 }
 
 group = "com.alexsarrell.cor4al"

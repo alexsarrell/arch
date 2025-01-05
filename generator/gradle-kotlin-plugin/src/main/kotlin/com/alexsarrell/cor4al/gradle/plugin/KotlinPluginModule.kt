@@ -10,6 +10,7 @@ import org.gradle.api.Project
 class KotlinPluginModule : Plugin<Project> {
     override fun apply(project: Project) {
         project.pluginManager.apply(Cor4alGeneratorPlugin::class.java)
+        project.pluginManager.apply("com.alexsarrell.cor4al.generator")
 
         project.afterEvaluate {
             project.plugins.withId("com.alexsarrell.cor4al.generator") {
