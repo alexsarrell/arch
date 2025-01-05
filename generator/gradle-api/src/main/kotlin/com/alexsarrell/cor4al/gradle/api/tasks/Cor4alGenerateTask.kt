@@ -5,10 +5,12 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
+import javax.annotation.Nullable
 
 abstract class Cor4alGenerateTask : DefaultTask() {
 
@@ -19,17 +21,22 @@ abstract class Cor4alGenerateTask : DefaultTask() {
     @get:Optional
     abstract val specsLimit: ListProperty<String>
 
-    @get:Input
-    @get:Optional
-    abstract val parser: Property<String>
-
     @get:OutputDirectory
     @get:Optional
     abstract val outputDir: Property<String>
 
+    @get:InputDirectory
+    @get:Optional
+    @get:Nullable
+    abstract val templateDir: Property<String>
+
+    @get:Input
+    abstract val packageName: Property<String>
+
     @get:Input
     @get:Optional
-    abstract val packageName: Property<String>
+    @get:Nullable
+    abstract val parentPackage: Property<String>
 
     @get:Input
     abstract val mode: Property<String>
@@ -47,7 +54,3 @@ abstract class Cor4alGenerateTask : DefaultTask() {
         pipelineStarter.get().runPipeline(this)
     }
 }
-
-// TODO Протестировать и отладить загрузку файлов
-// TODO Написать шаблоны и требования для генератора
-// TODO Написать генератор классы

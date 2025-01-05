@@ -1,18 +1,29 @@
-package com.alexsarrell.cor4al.generator.kotlin.model
+package com.alexsarrell.cor4al.core.model
 
-import com.alexsarrell.cor4al.core.model.Schema
-import com.alexsarrell.cor4al.core.model.SchemaProperty
+import com.alexsarrell.cor4al.core.model.ModelAccessor.ModelProperty
+import com.alexsarrell.cor4al.core.pipeline.context.GenerationContext
+import com.alexsarrell.cor4al.core.pipeline.context.packageName
+import com.alexsarrell.cor4al.core.pipeline.context.parentPackage
 import com.alexsarrell.cor4al.core.pipeline.pipe.context.ClassSchema
-import com.alexsarrell.cor4al.generator.kotlin.model.ModelAccessor.ModelProperty
+import com.alexsarrell.cor4al.core.pipeline.context.typeMappings
 
 data class ModelAccessor(
     val className: String,
     val parent: String?,
-    val parentFields: List<ModelProperty>,
+    val parentProperties: List<ModelProperty>,
     val version: String,
     val packageName: String,
     val properties: List<ModelProperty>,
+    val isOpen: Boolean,
+    val parentPackage: String?,
+    val imports: List<String>?,
+    val metadata: List<MetadataEntry>?,
 ) {
+    data class MetadataEntry(
+        val key: String,
+        val value: String,
+    )
+
     data class ModelProperty(
         val name: String,
         val required: Boolean,
@@ -22,14 +33,22 @@ data class ModelAccessor(
         val defaultValue: String? = null,
     )
 
-    constructor(schema: ClassSchema, packageName: String) :
+    constructor(schema: ClassSchema, context: GenerationContext) :
         this(
             className = schema.first,
             parent = schema.second.parent?.className,
             version = schema.second.version,
             properties = schema.second.properties.toModelProperties(),
-            parentFields = schema.second.extractParentFields().toModelProperties(),
-            packageName = packageName
+            parentProperties = schema.second.extractParentFields().toModelProperties(),
+            packageName = context.packageName!!,
+            isOpen =
+                when (schema.second.type) {
+                    SchemaType.ABSTRACT -> true
+                    else -> false
+                },
+            parentPackage = context.parentPackage,
+            imports = schema.second.imports(context),
+            metadata = schema.second.metadata?.map { MetadataEntry(it.key, it.value) },
         )
 }
 
@@ -57,3 +76,7 @@ private fun Map<String, SchemaProperty>.toModelProperties(): List<ModelProperty>
             defaultValue = it.value.defaultValue,
         )
     }
+
+private fun Schema.imports(context: GenerationContext): List<String> =
+    properties.values.mapNotNull { context.typeMappings?.get(it.type) } +
+        extractParentFields().values.mapNotNull { context.typeMappings?.get(it.type) }

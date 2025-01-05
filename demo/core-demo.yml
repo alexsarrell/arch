@@ -18,7 +18,7 @@ schemas:
         version: 1.0.0
         required: true
       metadata:
-        type: String # TODO добавить нормальную поддержку кастомных типов без необходимости объяв
+        type: String
         description: Metadata of the event
         default: emptyMap<String, Any>
         version: 1.0.0
@@ -31,14 +31,9 @@ schemas:
     version: 2.0.0
 
   AnalyticsEvent:
-    type: data
+    type: abstract
     description: event sending on
     properties:
-      name:
-        type: String
-        description: Name of the event
-        version: 1.0.0
-        required: true
       sessionId:
         type: String
         description: Session ID
@@ -52,7 +47,8 @@ schemas:
     description: event sending on
     properties:
       childProperty:
-        type: String
+        type: Instant
+        defaultValue: Instant.now()
         description: Name of the event
         version: 1.0.0
         required: true

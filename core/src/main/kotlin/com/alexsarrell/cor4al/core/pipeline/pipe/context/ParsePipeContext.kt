@@ -2,9 +2,9 @@ package com.alexsarrell.cor4al.core.pipeline.pipe.context
 
 import com.alexsarrell.cor4al.core.model.Schema
 import com.alexsarrell.cor4al.core.model.Spec
-import com.alexsarrell.cor4al.core.pipeline.Cor4alContext
+import com.alexsarrell.cor4al.core.pipeline.context.GenerationContext
 
-class ParsePipeContext(context: Cor4alContext): PipeContext(context) {
+class ParsePipeContext(context: GenerationContext): PipeContext(context) {
     val specs: MutableSet<Spec> = mutableSetOf()
 
     fun addSpec(spec: Spec) {

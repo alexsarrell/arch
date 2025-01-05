@@ -1,13 +1,8 @@
 package com.alexsarrell.cor4al.gradle.api.io
 
 import com.alexsarrell.cor4al.core.model.SupportedFileType
-import com.alexsarrell.cor4al.gradle.api.model.LoadResult
-import com.alexsarrell.cor4al.gradle.api.pipeline.pipe.context.LoadPipeContext
-import com.alexsarrell.cor4al.core.util.relativeToBaseDir
-import com.alexsarrell.cor4al.core.util.relativeToBaseFile
 import org.gradle.api.Project
 import java.io.File
-import java.net.URI
 
 object RootFileLoader : FileLoader {
     override fun canLoad(filePath: String): Boolean {
@@ -15,7 +10,7 @@ object RootFileLoader : FileLoader {
         return true
     }
 
-    override fun get(basePath: String, project: Project): LoadResult {
+    override fun get(basePath: String, project: Project): Set<File> {
         val sourceDir = File(basePath)
 
         require(sourceDir.exists()) {
@@ -33,6 +28,6 @@ object RootFileLoader : FileLoader {
                 }
                 .toSet()
 
-        return LoadResult(sourceDir, specs)
+        return specs
     }
 }

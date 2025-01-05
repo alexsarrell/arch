@@ -11,5 +11,6 @@ data class Schema(
     val properties: Map<String, SchemaProperty>,
     @Serializable(with = ParentRefSerializer::class)
     val parent: ParentRef? = null,
+    val metadata: Map<String, String>? = null,
     val version: String,
 )

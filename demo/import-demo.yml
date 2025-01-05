@@ -1,0 +1,18 @@
+settings:
+  name: import-demo
+
+schemas:
+  ChildEventFileImport:
+    type: data
+    parent: './core-demo.yml#/AnalyticsEvent'
+    description: event sending on
+    metadata:
+      name: childEventFileImport
+    properties:
+      childProperty:
+        type: Instant
+        defaultValue: Instant.now()
+        description: Name of the event
+        version: 1.0.0
+        required: true
+    version: 1.0.0

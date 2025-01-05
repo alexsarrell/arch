@@ -3,6 +3,6 @@ package com.alexsarrell.cor4al.core.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SchemaSettings(
+data class SpecSettings(
     val name: String,
 )

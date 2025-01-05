@@ -1,0 +1,4 @@
+{{#if parent}}
+
+import {{parentPackage}}.{{parent}}{{/if}}{{#if imports}}
+{{#each imports}}import {{this}}{{/each}}{{/if}}

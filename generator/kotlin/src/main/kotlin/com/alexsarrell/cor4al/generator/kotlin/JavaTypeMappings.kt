@@ -1,14 +1,18 @@
 package com.alexsarrell.cor4al.generator.kotlin
 
-object JavaTypeMappings {
+import com.alexsarrell.cor4al.core.model.TypeMappings
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
+
+object JavaTypeMappings : TypeMappings {
     private val mappings = mutableMapOf<String, String>(
-        "string" to String::class.java.name,
-        "int" to Int::class.javaObjectType.name,
-        "float" to Float::class.javaObjectType.name,
-        "boolean" to Boolean::class.javaObjectType.name,
+        "OffsetDateTime" to OffsetDateTime::class.javaObjectType.name,
+        "LocalDateTime" to LocalDateTime::class.javaObjectType.name,
+        "Instant" to Instant::class.javaObjectType.name,
     )
 
-    fun getMappings(): Map<String, String> {
+    override fun getMappings(): Map<String, String> {
         return mappings
     }
 }
