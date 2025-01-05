@@ -8,7 +8,6 @@ import com.charleskorn.kaml.YamlConfiguration
 import java.io.File
 
 abstract class AbstractYamlParser(
-    private val context: ParsePipeContext,
     strictMode: Boolean = false,
 ) : SpecParser {
     private val yaml =
@@ -21,7 +20,7 @@ abstract class AbstractYamlParser(
     private val parsedSpecs = mutableMapOf<String, Spec>()
 
     // TODO cache for optimisation
-    private fun parseFile(file: File): Spec {
+    private fun parseFile(file: File, context: ParsePipeContext): Spec {
         val parseResult = parsedSpecs[file.path]
             ?: yaml.decodeFromString(Spec.serializer(), file.readText())
                 .also { parsedSpecs[file.path] = it }
@@ -32,7 +31,7 @@ abstract class AbstractYamlParser(
             if (parentFile == file) {
                 schema.parent.resolveRef(parseResult)
             } else if (parentFile != null) {
-                val parentParseResult = parseFile(parentFile)
+                val parentParseResult = parseFile(parentFile, context)
                 schema.parent.resolveRef(parentParseResult)
             }
 
@@ -44,6 +43,7 @@ abstract class AbstractYamlParser(
     override fun parse(
         specs: Set<File>,
         specsLimit: List<String>,
+        context: ParsePipeContext,
     ) {
         val files =
             specs
@@ -54,8 +54,6 @@ abstract class AbstractYamlParser(
                     }
                 }
 
-        files.forEach { parseFile(it) }
+        files.forEach { parseFile(it, context) }
     }
-
-    override fun context(): PipeContext = context
 }

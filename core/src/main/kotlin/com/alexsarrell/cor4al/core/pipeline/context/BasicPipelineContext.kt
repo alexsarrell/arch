@@ -7,17 +7,17 @@ open class BasicPipelineContext : PipelineContext {
 
     override val context: MutableMap<String, Any?> = mutableMapOf()
 
-    private val pipes: MutableList<Pipe> = mutableListOf()
+    private val pipes: MutableMap<String, Pipe> = mutableMapOf()
 
     override fun <P : Pipe> register(pipe: P) {
-        pipes.add(pipe)
+        val pipeContext =
+            requireNotNull(pipe.pipeContext) { "Context is not declared for $pipe" }
+        pipes[pipeContext::class.java.name] = pipe
     }
 
     override fun <C : PipeContext> getContext(contextClass: Class<C>): C {
-        val context =
-            pipes.find { it.pipeContext::class.java.isAssignableFrom(contextClass) }
-        return requireNotNull(context) {
-            "Context for pipe: $contextClass not found"
+        return requireNotNull(pipes[contextClass.name]) {
+            "Context for class: $contextClass not found"
         }.pipeContext as C
     }
 
@@ -29,19 +29,3 @@ open class BasicPipelineContext : PipelineContext {
         return context[key]
     }
 }
-
-var PipelineContext.outputDir: String by ContextProperty("outputDir")
-
-var PipelineContext.packageName: String by ContextProperty("packageName")
-
-var PipelineContext.parentPackage: String by ContextProperty("parentPackage")
-
-var PipelineContext.templateDir: String? by ContextProperty("templateDir")
-
-var PipelineContext.typeMappings: Map<String, String> by ContextProperty("typeMappings")
-
-var PipelineContext.specSource: String by ContextProperty("specSource")
-
-var PipelineContext.specLimit: List<String> by ContextProperty("specLimit")
-
-var PipelineContext.generatorFileExtension: String by ContextProperty("generatorFileExtension")

@@ -15,7 +15,7 @@ import com.alexsarrell.cor4al.gradle.api.tasks.Cor4alGenerateTask
 class GradleKotlinGenerationPipelineStarter : GradleGenerationPipelineStarter {
     private val pipeline: GenerationPipeline = BasicGenerationPipeline()
     private val context: PipelineContext = pipeline.context
-    private val parser: BasicYamlParser = BasicYamlParser(ParsePipeContext(context))
+    private val parser: BasicYamlParser = BasicYamlParser()
     private val generator: BasicGenerator = BasicGenerator()
 
     override fun runPipeline(task: Cor4alGenerateTask) {
@@ -23,7 +23,7 @@ class GradleKotlinGenerationPipelineStarter : GradleGenerationPipelineStarter {
 
         pipeline.generate {
             process(LoadPipe(context, task))
-            process(ParsePipe(parser))
+            process(ParsePipe(context, parser))
             process(GeneratePipe(generator))
         }
     }
