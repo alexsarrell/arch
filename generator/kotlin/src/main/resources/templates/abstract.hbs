@@ -1,5 +1,4 @@
 package {{packageName}}{{> imports }}
 
-@com.alexsarrell.cor4al.core.annotation.Version(code = "{{version}}"){{#each metadata}}
-@com.alexsarrell.cor4al.core.annotation.Metadata(key = "{{key}}", value = "{{value}}"){{/each}}
+{{> annotation}}
 abstract {{> class}}
