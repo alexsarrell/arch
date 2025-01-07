@@ -8,10 +8,12 @@ var PipelineContext.parentPackage: String by ContextProperty("parentPackage")
 
 var PipelineContext.templateDir: String? by ContextProperty("templateDir")
 
-var PipelineContext.typeMappings: Map<String, String> by ContextProperty("typeMappings")
+var PipelineContext.importMappings: Map<String, String> by ContextProperty("typeMappings")
 
 var PipelineContext.specSource: String by ContextProperty("specSource")
 
 var PipelineContext.specLimit: List<String> by ContextProperty("specLimit")
 
 var PipelineContext.generatorFileExtension: String by ContextProperty("generatorFileExtension")
+
+var PipelineContext.metadataAccessors: Boolean by ContextProperty("metadataAccessors")

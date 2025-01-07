@@ -28,4 +28,8 @@ tasks.register<Cor4alGenerateTask>("cor4alGenerate") {
 }
 ```
 
+| Property   | Description                                                                                        | Example                                                           |
+|------------|----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| specSource | Source of specification files. Library provides support for both direct path and dependency links. | /etc/alexsarrell/demo/spec<br/>com.alexsarrell.example:/demo/spec |
+
 Examples of task configuration and specifications for generation are provided in the :demo module.

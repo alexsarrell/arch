@@ -9,6 +9,7 @@ import com.alexsarrell.cor4al.gradle.api.io.RootFileLoader
 import com.alexsarrell.cor4al.core.pipeline.pipe.context.LoadPipeContext
 import com.alexsarrell.cor4al.core.pipeline.pipe.context.specFiles
 import com.alexsarrell.cor4al.gradle.api.tasks.Cor4alGenerateTask
+import com.alexsarrell.cor4al.gradle.api.util.loadResourceLines
 import java.io.InputStreamReader
 import java.net.URI
 import java.nio.file.FileSystems
@@ -27,7 +28,15 @@ class LoadPipe(
     override fun process() {
         pipeContext as LoadPipeContext
         val specSource = task.specSource.get()
-        pipeContext.specFiles = accessor.getLoader(specSource).get(specSource, task.project)
+        val loaderIgnore =
+            loadResourceLines(LOADER_IGNORE_RESOURCE)
+                .plus(task.loaderIgnore.getOrElse(listOf()))
+                .map { it.toRegex() }
+        pipeContext.specFiles =
+            accessor.getLoader(specSource).get(specSource, task.project)
+                .filter { file ->
+                    !loaderIgnore.any { it.containsMatchIn(file.name) }
+                }.toSet()
     }
 
     private fun loadTemplates(resourcePath: String): Map<String, String> {
@@ -60,5 +69,9 @@ class LoadPipe(
             }
         }
         return templates
+    }
+
+    companion object {
+        const val LOADER_IGNORE_RESOURCE = ".loaderignore"
     }
 }

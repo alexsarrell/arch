@@ -6,7 +6,7 @@ import org.gradle.api.Project
 import java.io.File
 
 object ConfigurationFileLoader : FileLoader {
-    private val configurationPattern = ".*\\..*\\.*:/.*".toRegex()
+    private val configurationPattern = "(.*\\..*\\.*:/.*|.*\\..*\\.*)".toRegex()
 
     override fun canLoad(filePath: String): Boolean = configurationPattern.matches(filePath)
 
@@ -24,8 +24,8 @@ object ConfigurationFileLoader : FileLoader {
             project.configurations
                 .filter { it.isCanBeResolved }
                 .flatMap { it.resolve() }
-                .find { it.name.contains(configuration.name) }
-                ?: throw GradleException("Configuration $basePath not found in dependencies")
+                .find { it.path.contains(configuration.name) }
+                ?: throw GradleException("Dependency $basePath is not found")
 
         val specs =
             project
@@ -44,7 +44,9 @@ object ConfigurationFileLoader : FileLoader {
         val filePath: String = "",
     ) {
         constructor(uri: String) : this(
-            uri.split(":/").first(),
+            uri.split(":/").first()
+                .replace(".", File.separator)
+                .replace(":", File.separator),
             uri.split(":/").getOrElse(1) { "" },
         )
     }

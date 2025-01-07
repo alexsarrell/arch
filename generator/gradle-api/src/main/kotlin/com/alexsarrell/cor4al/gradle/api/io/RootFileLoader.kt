@@ -6,8 +6,8 @@ import java.io.File
 
 object RootFileLoader : FileLoader {
     override fun canLoad(filePath: String): Boolean {
-        // TODO make File from path and check it is directory
-        return true
+        val sourceDir = File(filePath)
+        return sourceDir.exists() && sourceDir.isDirectory
     }
 
     override fun get(basePath: String, project: Project): Set<File> {

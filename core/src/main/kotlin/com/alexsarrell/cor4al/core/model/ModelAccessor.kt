@@ -2,11 +2,8 @@ package com.alexsarrell.cor4al.core.model
 
 import com.alexsarrell.cor4al.core.model.ModelAccessor.MetadataEntry
 import com.alexsarrell.cor4al.core.model.ModelAccessor.ModelProperty
-import com.alexsarrell.cor4al.core.pipeline.context.PipelineContext
-import com.alexsarrell.cor4al.core.pipeline.context.packageName
-import com.alexsarrell.cor4al.core.pipeline.context.parentPackage
+import com.alexsarrell.cor4al.core.pipeline.context.*
 import com.alexsarrell.cor4al.core.pipeline.pipe.context.ClassSchema
-import com.alexsarrell.cor4al.core.pipeline.context.typeMappings
 
 data class ModelAccessor(
     val className: String,
@@ -20,6 +17,7 @@ data class ModelAccessor(
     val parentPackage: String?,
     val imports: List<String>?,
     val metadata: List<MetadataEntry>?,
+    val metadataAccessors: Boolean,
 ) {
     data class MetadataEntry(
         val key: String,
@@ -48,6 +46,7 @@ data class ModelAccessor(
             imports = schema.second.imports(context),
             metadata = schema.second.metadata?.toMetadataEntry(),
             description = schema.second.description,
+            metadataAccessors = context.metadataAccessors,
         )
 }
 
@@ -78,9 +77,11 @@ private fun Map<String, SchemaProperty>.toModelProperties(): List<ModelProperty>
         )
     }
 
-private fun Schema.imports(context: PipelineContext): List<String> =
-    properties.values.mapNotNull { context.typeMappings[it.type] } +
-        extractParentFields().values.mapNotNull { context.typeMappings[it.type] }
+private fun Schema.imports(context: PipelineContext): List<String> {
+    val propertiesImports = properties.values.mapNotNull { context.importMappings[it.type] }
+    val parentPropertiesImports = extractParentFields().values.mapNotNull { context.importMappings[it.type] }
+    return propertiesImports.plus(parentPropertiesImports).plus(imports)
+}
 
 private fun Schema.isOpen(): Boolean {
     return when (type) {

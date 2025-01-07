@@ -5,7 +5,7 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
 
-object JavaTypeMappings : TypeMappings {
+object JavaImportMappings : TypeMappings {
     private val mappings = mutableMapOf<String, String>(
         "OffsetDateTime" to OffsetDateTime::class.javaObjectType.name,
         "LocalDateTime" to LocalDateTime::class.javaObjectType.name,

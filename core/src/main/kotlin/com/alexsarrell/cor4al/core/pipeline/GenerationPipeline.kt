@@ -5,6 +5,7 @@ import com.alexsarrell.cor4al.core.pipeline.helper.GenerationFlowDefinition
 
 interface GenerationPipeline {
     val context: PipelineContext
+
     fun generate(flow: GenerationFlowDefinition.() -> Unit)
 }
 

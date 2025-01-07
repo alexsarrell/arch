@@ -3,6 +3,7 @@ package com.alexsarrell.cor4al.gradle.api.tasks
 import com.alexsarrell.cor4al.gradle.api.GradleGenerationPipelineStarter
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.ListProperty
+import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
@@ -20,6 +21,18 @@ abstract class Cor4alGenerateTask : DefaultTask() {
     @get:Input
     @get:Optional
     abstract val specsLimit: ListProperty<String>
+
+    @get:Input
+    @get:Optional
+    abstract val importMappings: MapProperty<String, String>
+
+    @get:Input
+    @get:Optional
+    abstract val metadataAccessors: Property<Boolean>
+
+    @get:Input
+    @get:Optional
+    abstract val loaderIgnore: ListProperty<String>
 
     @get:OutputDirectory
     @get:Optional

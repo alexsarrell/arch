@@ -3,12 +3,11 @@ package com.alexsarrell.cor4al.gradle.generator
 import com.alexsarrell.cor4al.core.pipeline.pipe.impl.GeneratePipe
 import com.alexsarrell.cor4al.gradle.api.GradleGenerationPipelineStarter
 import com.alexsarrell.cor4al.core.pipeline.pipe.impl.ParsePipe
-import com.alexsarrell.cor4al.core.pipeline.pipe.context.ParsePipeContext
 import com.alexsarrell.cor4al.core.generator.BasicGenerator
 import com.alexsarrell.cor4al.core.parser.BasicYamlParser
 import com.alexsarrell.cor4al.core.pipeline.*
 import com.alexsarrell.cor4al.core.pipeline.context.*
-import com.alexsarrell.cor4al.generator.kotlin.JavaTypeMappings
+import com.alexsarrell.cor4al.generator.kotlin.JavaImportMappings
 import com.alexsarrell.cor4al.gradle.api.pipeline.pipe.LoadPipe
 import com.alexsarrell.cor4al.gradle.api.tasks.Cor4alGenerateTask
 
@@ -34,8 +33,9 @@ class GradleKotlinGenerationPipelineStarter : GradleGenerationPipelineStarter {
         context.outputDir = task.outputDir.get()
         context.templateDir = task.templateDir.orNull
         context.generatorFileExtension = "kt"
-        context.typeMappings = JavaTypeMappings.getMappings()
+        context.importMappings = JavaImportMappings.getMappings() + task.importMappings.getOrElse(mapOf())
         context.specLimit = task.specsLimit.get()
         context.specSource = task.specSource.get()
+        context.metadataAccessors = task.metadataAccessors.getOrElse(true)
     }
 }

@@ -17,7 +17,8 @@ class GenerationFlowDefinition(
         when (pipe) {
             is StandalonePipe -> pipe.process()
             is ChildPipe<*> -> {
-                (pipe as ChildPipe<PipeContext>).process(context.getContext(pipe.parentContext))
+                val parentContext = context.getContext(pipe.parentContext)
+                (pipe as ChildPipe<PipeContext>).process(parentContext)
             }
             else -> throw IllegalArgumentException("Pipe $pipe type is not supported")
         }

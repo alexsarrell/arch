@@ -7,11 +7,5 @@ enum class SupportedFileType(vararg val extension: String) {
 
     ALL("yaml", "yml", "json", "xml");
 
-/*
-    *(mutableListOf<String>().apply {
-        SupportedFileType.entries.filter { it != ALL }.map { plus(it.extension) }
-    }.toTypedArray())
-*/
-
     val pattern = ".*\\.(${extension.joinToString("|")})".toRegex()
 }

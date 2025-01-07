@@ -12,5 +12,6 @@ data class Schema(
     @Serializable(with = ParentRefSerializer::class)
     val parent: ParentRef? = null,
     val metadata: Map<String, String>? = null,
+    val imports: List<String> = listOf(),
     val version: String,
 )

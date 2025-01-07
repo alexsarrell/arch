@@ -28,7 +28,6 @@ data class ParentRef(val fullRef: String) {
     }
 
     companion object {
-        val LOCAL_REF_PATTERN: Regex = "#/(.*/)*.*".toRegex()
-        val EXTERNAL_FILE_REF_PATTERN: Regex = "^(\\.\\.?|[^#].*)/.*${LOCAL_REF_PATTERN.pattern}".toRegex()
+        val EXTERNAL_FILE_REF_PATTERN: Regex = "^(\\.\\.?|[^#].*)/.*#/(.*/)*.*".toRegex()
     }
 }

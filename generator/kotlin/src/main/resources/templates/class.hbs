@@ -10,3 +10,4 @@ class {{className}}({{#each properties}}
 ){{#if parent}}: {{parent}}({{#each parentProperties}}
     {{name}} = {{name}},{{/each}}
 ){{/if}}
+{{#if metadataAccessors}}{{> metadata-accessor}}{{/if}}

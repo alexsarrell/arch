@@ -8,11 +8,12 @@ plugins {
 dependencies {
     api(project(":core"))
     api(project(":generator:gradle-kotlin-plugin"))
+    implementation("org.aalpov:blocking-queue:1.0-SNAPSHOT")
 }
 
 tasks.register<Cor4alGenerateTask>("cor4alGenerate") {
     doNotTrackState("If you want to always regenerate model classes")
-    specSource.set(project.file(".").absolutePath)
+    specSource.set("${project.projectDir}")
     outputDir.set("${project.layout.buildDirectory.get()}/generated")
     packageName.set("com.alexsarrell.demo")
 }

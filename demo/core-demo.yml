@@ -32,11 +32,11 @@ schemas:
 
   AnalyticsEvent:
     type: abstract
-    description: event sending on
+    description: Abstract event class example
     properties:
       sessionId:
         type: String
-        description: Session ID
+        description: ID of a session
         version: 1.0.0
         required: true
     version: 1.0.0
@@ -44,12 +44,12 @@ schemas:
   ChildEvent:
     type: data
     parent: '#/AnalyticsEvent'
-    description: event sending on
+    description: Child event class example
     properties:
       childProperty:
         type: Instant
         defaultValue: Instant.now()
-        description: Name of the event
+        description: Example child property description
         version: 1.0.0
         required: true
     version: 1.0.0

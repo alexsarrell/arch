@@ -5,7 +5,7 @@ schemas:
   ChildEventFileImport:
     type: data
     parent: './core-demo.yml#/AnalyticsEvent'
-    description: event sending on
+    description: Child event importing file example
     metadata:
       name: childEventFileImport
     properties:
