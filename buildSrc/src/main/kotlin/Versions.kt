@@ -1,6 +1,8 @@
 
 object Versions {
-    val javaVersion = "21"
-    val kotlinVersion = "1.9.21"
+    val javaVersion = "17"
+    val kotlinVersion = "1.9.22"
     val kotlinLangVersion = "1.9"
+    val loggingVersion = "2.0.16"
+    val handlebarsVersion = "4.3.1"
 }

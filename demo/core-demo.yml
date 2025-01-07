@@ -1,0 +1,54 @@
+settings:
+  name: core
+
+schemas:
+  AnalyticsDocument:
+    description: Class for analytics holding
+    type: data
+    properties:
+      name:
+        type: String
+        description: Name of the event
+        required: true
+        version: 1.0.0
+      accountId:
+        type: UUID
+        description: ID of the event
+        required: true
+        version: 1.0.0
+      metadata:
+        type: String
+        description: Metadata of the event
+        default: emptyMap<String, Any>
+        required: true
+        version: 1.0.0
+      event:
+        type: AnalyticsEvent
+        description: Body of analytics event
+        required: true
+        version: 1.0.0
+    version: 2.0.0
+
+  AnalyticsEvent:
+    type: abstract
+    description: Abstract event class example
+    properties:
+      sessionId:
+        type: UUID
+        description: ID of a session
+        version: 1.0.0
+        required: true
+    version: 1.0.0
+
+  ChildEvent:
+    type: data
+    parent: '#/AnalyticsEvent'
+    description: Child event class example
+    properties:
+      childProperty:
+        type: Instant
+        defaultValue: Instant.now()
+        description: Example child property description
+        required: true
+        version: 1.0.0
+    version: 1.0.0

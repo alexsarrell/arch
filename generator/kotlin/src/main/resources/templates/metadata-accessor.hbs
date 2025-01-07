@@ -1,0 +1,3 @@
+{{#each metadata}}
+val {{className}}.{{key}}: String
+    get() = this::class.annotations.filterIsInstance<Metadata>().find { it.key == {{key}} }!!.value{{/each}}

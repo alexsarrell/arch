@@ -1,7 +1,19 @@
-rootProject.name = "cor4al"
+rootProject.name = "arch"
 
-include(":core")
-include(":generator:gradle")
-findProject("generator:gradle")?.name = "generator-gradle"
-include(":generator:kotlin")
+include(
+    ":core",
+    ":generator:gradle-api",
+    ":generator:kotlin",
+    ":generator:gradle-kotlin-plugin",
+)
 findProject("generator:kotlin")?.name = "generator-kotlin"
+include(":demo")
+findProject(":demo")?.name = "demo"
+
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
