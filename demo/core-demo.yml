@@ -12,8 +12,7 @@ schemas:
         version: 1.0.0
         required: true
       accountId:
-        type: String
-        format: uuid
+        type: UUID
         description: ID of the event
         version: 1.0.0
         required: true
@@ -35,7 +34,7 @@ schemas:
     description: Abstract event class example
     properties:
       sessionId:
-        type: String
+        type: UUID
         description: ID of a session
         version: 1.0.0
         required: true
