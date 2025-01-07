@@ -39,38 +39,6 @@ class LoadPipe(
                 }.toSet()
     }
 
-    private fun loadTemplates(resourcePath: String): Map<String, String> {
-        val classLoader = Thread.currentThread().contextClassLoader
-        val resource = classLoader.getResource(resourcePath)
-        val templates = mutableMapOf<String, String>()
-        if (resource != null) {
-            val uri = resource.toURI()
-            val jarPath = uri.schemeSpecificPart.substringBefore("!")
-
-            val fileSystem = try {
-                FileSystems.getFileSystem(URI.create("jar:$jarPath"))
-            } catch (e: java.nio.file.FileSystemNotFoundException) {
-                FileSystems.newFileSystem(URI.create("jar:$jarPath"), emptyMap<String, Any>())
-            }
-
-            val path = fileSystem.getPath(resourcePath)
-            Files.walk(path, 1).use { paths ->
-                paths.filter { Files.isRegularFile(it) && (it.toString().endsWith(".mustache") || it.toString().endsWith(".hbs")) }
-                    .forEach { filePath ->
-                        val fileName = filePath.fileName.toString()
-                        val inputStream = classLoader.getResourceAsStream("$resourcePath/$fileName")
-
-                        requireNotNull(inputStream) { "Failed to load template file as input stream $fileName" }
-
-                        val content = InputStreamReader(inputStream).readText()
-
-                        templates[fileName.split(".")[0]] = content
-                    }
-            }
-        }
-        return templates
-    }
-
     companion object {
         const val LOADER_IGNORE_RESOURCE = ".loaderignore"
     }
