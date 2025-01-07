@@ -10,10 +10,6 @@ import com.alexsarrell.cor4al.core.pipeline.pipe.context.LoadPipeContext
 import com.alexsarrell.cor4al.core.pipeline.pipe.context.specFiles
 import com.alexsarrell.cor4al.gradle.api.tasks.Cor4alGenerateTask
 import com.alexsarrell.cor4al.gradle.api.util.loadResourceLines
-import java.io.InputStreamReader
-import java.net.URI
-import java.nio.file.FileSystems
-import java.nio.file.Files
 
 class LoadPipe(
     context: PipelineContext,

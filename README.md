@@ -28,8 +28,12 @@ tasks.register<Cor4alGenerateTask>("cor4alGenerate") {
 }
 ```
 
-| Property   | Description                                                                                        | Example                                                           |
-|------------|----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| specSource | Source of specification files. Library provides support for both direct path and dependency links. | /etc/alexsarrell/demo/spec<br/>com.alexsarrell.example:/demo/spec |
+| Property       | Description                                                                                        | Example                                                           |
+|----------------|----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| specSource     | Source of specification files. Library provides support for both direct path and dependency links. | /etc/alexsarrell/demo/spec<br/>com.alexsarrell.example:/demo/spec |
+| outputDir      | The directory to generate models.                                                                  |                                                                   |
+| packageName    | The package will be used for models.                                                               |                                                                   |
+| specsLimit     | List of file paths (relative to specSource) to use for generation (to exclude another ones).       | listOf("/data/core-demo.yml")                                     |
+| importMappings | Additional mappings for import. Applies for all defined models.                                    | mapOf("Clock" to "java.time.Clock")                               |
 
 Examples of task configuration and specifications for generation are provided in the :demo module.
