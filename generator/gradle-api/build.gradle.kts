@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.alexsarrell.cor4al"
-version = "0.1.0"
+version = "1.0.0"
 
 dependencies {
     api(project(":core"))

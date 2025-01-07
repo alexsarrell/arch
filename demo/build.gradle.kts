@@ -2,7 +2,7 @@ import com.alexsarrell.cor4al.gradle.api.tasks.Cor4alGenerateTask
 
 plugins {
     `kotlin-configuration`
-    id("com.alexsarrell.cor4al.generator.kotlin.plugin") version "0.1.0"
+    id("com.alexsarrell.cor4al.generator.kotlin.plugin") version "1.0.0"
 }
 
 dependencies {
