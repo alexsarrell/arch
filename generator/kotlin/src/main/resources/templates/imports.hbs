@@ -1,4 +1,5 @@
+
 {{#if parent}}
-import {{parentPackage}}.{{parent}}{{/if}}{{#if imports}}
-{{#each imports}}import {{this}}{{/each}}{{/if}}{{#if metadata}}
+import {{parentPackage}}.{{parent}}{{/if}}{{#if imports}}{{#each imports}}
+import {{this}}{{/each}}{{/if}}{{#if metadata}}
 import com.alexsarrell.cor4al.core.annotation.Metadata{{/if}}
