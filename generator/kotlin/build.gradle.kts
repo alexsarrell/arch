@@ -29,6 +29,10 @@ publishing {
     }
 }
 
+tasks.named("build") {
+    dependsOn(":core:publishToMavenLocal")
+}
+
 tasks.test {
     useJUnitPlatform()
 }

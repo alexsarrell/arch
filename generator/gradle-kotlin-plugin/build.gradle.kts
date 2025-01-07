@@ -5,10 +5,10 @@ plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
     `maven-publish`
-    id("com.alexsarrell.cor4al.generator") version "1.0.0"
+    id("com.alexsarrell.arch.generator") version "1.0.0"
 }
 
-group = "com.alexsarrell.cor4al"
+group = "com.alexsarrell.arch"
 version = "1.0.0"
 
 dependencies {
@@ -22,9 +22,9 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        create("cor4alKotlinPlugin") {
-            id = "com.alexsarrell.cor4al.generator.kotlin.plugin"
-            implementationClass = "com.alexsarrell.cor4al.gradle.plugin.KotlinPluginModule"
+        create("archKotlinPlugin") {
+            id = "com.alexsarrell.arch.generator.kotlin.plugin"
+            implementationClass = "com.alexsarrell.arch.gradle.plugin.KotlinPluginModule"
         }
     }
 }
@@ -36,6 +36,12 @@ publishing {
             from(components["java"])
         }
     }
+}
+
+tasks.named("build") {
+    dependsOn(":core:publishToMavenLocal")
+    dependsOn(":generator:gradle-api:publishToMavenLocal")
+    dependsOn(":generator:kotlin:publishToMavenLocal")
 }
 
 val compileKotlin: KotlinCompile by tasks

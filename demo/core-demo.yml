@@ -9,24 +9,24 @@ schemas:
       name:
         type: String
         description: Name of the event
-        version: 1.0.0
         required: true
+        version: 1.0.0
       accountId:
         type: UUID
         description: ID of the event
-        version: 1.0.0
         required: true
+        version: 1.0.0
       metadata:
         type: String
         description: Metadata of the event
         default: emptyMap<String, Any>
-        version: 1.0.0
         required: true
+        version: 1.0.0
       event:
         type: AnalyticsEvent
         description: Body of analytics event
-        version: 1.0.0
         required: true
+        version: 1.0.0
     version: 2.0.0
 
   AnalyticsEvent:
@@ -49,6 +49,6 @@ schemas:
         type: Instant
         defaultValue: Instant.now()
         description: Example child property description
-        version: 1.0.0
         required: true
+        version: 1.0.0
     version: 1.0.0

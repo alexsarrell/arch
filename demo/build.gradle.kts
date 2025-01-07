@@ -1,17 +1,16 @@
-import com.alexsarrell.cor4al.gradle.api.tasks.Cor4alGenerateTask
+import com.alexsarrell.arch.gradle.api.tasks.ArchGenerateTask
 
 plugins {
     `kotlin-configuration`
-    id("com.alexsarrell.cor4al.generator.kotlin.plugin") version "1.0.0"
+    id("com.alexsarrell.arch.generator.kotlin.plugin") version "1.0.0"
 }
 
 dependencies {
     api(project(":core"))
     api(project(":generator:gradle-kotlin-plugin"))
-    implementation("org.aalpov:blocking-queue:1.0-SNAPSHOT")
 }
 
-tasks.register<Cor4alGenerateTask>("cor4alGenerate") {
+tasks.register<ArchGenerateTask>("archGenerate") {
     doNotTrackState("If you want to always regenerate model classes")
     specSource.set("${project.projectDir}")
     outputDir.set("${project.layout.buildDirectory.get()}/generated")
@@ -19,7 +18,7 @@ tasks.register<Cor4alGenerateTask>("cor4alGenerate") {
 }
 
 tasks.named("compileKotlin") {
-    dependsOn("cor4alGenerate")
+    dependsOn("archGenerate")
 }
 
 sourceSets {

@@ -5,21 +5,20 @@ plugins {
     `maven-publish`
 }
 
-group = "com.alexsarrell.cor4al"
+group = "com.alexsarrell.arch"
 version = "1.0.0"
 
 dependencies {
     api(project(":core"))
-    // implementation("org.slf4j:slf4j-api", Versions.loggingVersion)
     implementation(kotlin("gradle-plugin", Versions.kotlinVersion))
     implementation(gradleApi())
 }
 
 gradlePlugin {
     plugins {
-        create("cor4alPlugin") {
-            id = "com.alexsarrell.cor4al.generator"
-            implementationClass = "com.alexsarrell.cor4al.gradle.api.plugin.Cor4alGeneratorPlugin"
+        create("archPlugin") {
+            id = "com.alexsarrell.arch.generator"
+            implementationClass = "com.alexsarrell.arch.gradle.api.plugin.ArchGeneratorPlugin"
         }
     }
 }
@@ -31,4 +30,8 @@ publishing {
             from(components["java"])
         }
     }
+}
+
+tasks.named("build") {
+    dependsOn(":core:publishToMavenLocal")
 }
