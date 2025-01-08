@@ -38,7 +38,7 @@ publishing {
     }
 }
 
-tasks.named("build") {
+tasks.named("publishToMavenLocal") {
     dependsOn(":core:publishToMavenLocal")
     dependsOn(":generator:gradle-api:publishToMavenLocal")
     dependsOn(":generator:kotlin:publishToMavenLocal")
