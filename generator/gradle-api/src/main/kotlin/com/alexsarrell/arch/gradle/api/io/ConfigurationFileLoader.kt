@@ -6,7 +6,7 @@ import org.gradle.api.Project
 import java.io.File
 
 object ConfigurationFileLoader : FileLoader {
-    private val configurationPattern = "(.*\\..*\\.*:/.*)".toRegex()
+    private val configurationPattern = "^[a-zA-Z0-9_.-]+:[a-zA-Z0-9_.-]+(?:/.*)?$".toRegex()
 
     override fun canLoad(filePath: String): Boolean = configurationPattern.matches(filePath)
 

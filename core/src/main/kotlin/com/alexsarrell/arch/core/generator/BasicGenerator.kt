@@ -1,25 +1,34 @@
 package com.alexsarrell.arch.core.generator
 
-import com.alexsarrell.arch.core.configuration.FileWriterConfiguration
 import com.alexsarrell.arch.core.io.FileCodeWriter
 import com.alexsarrell.arch.core.model.accessor.ModelAccessor
 import com.alexsarrell.arch.core.pipeline.context.PipelineContext
 import com.alexsarrell.arch.core.pipeline.context.generatorFileExtension
+import com.alexsarrell.arch.core.pipeline.context.outputDir
+import com.alexsarrell.arch.core.pipeline.context.packageName
+import com.alexsarrell.arch.core.pipeline.context.sourceDir
+import com.alexsarrell.arch.core.pipeline.context.templateDir
 import com.alexsarrell.arch.core.pipeline.pipe.context.ClassSchema
 import com.alexsarrell.arch.core.pipeline.pipe.context.ParsePipeContext
-import com.alexsarrell.arch.core.pipeline.context.templateDir
 import com.alexsarrell.arch.core.pipeline.pipe.context.specs
 import com.github.jknack.handlebars.Handlebars
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader
 import com.github.jknack.handlebars.io.FileTemplateLoader
 
-class BasicGenerator : CodeGenerator {
-    private val writerConfiguration = FileWriterConfiguration("/src/main/kotlin")
+/**
+ * protected handlebars
+ * ctor resource prefix
+ *
+ */
+class BasicGenerator : AbstractGenerator("/templates") {
 
+}
+
+abstract class AbstractGenerator(templatesPrefix: String) : CodeGenerator {
     private val handlebars =
         Handlebars()
             .apply {
-                with(ClassPathTemplateLoader("/templates", ".hbs"))
+                with(ClassPathTemplateLoader(templatesPrefix, ".hbs"))
             }
 
     override fun generate(context: ParsePipeContext) {
@@ -48,11 +57,20 @@ class BasicGenerator : CodeGenerator {
             ModelAccessor(schema, context)
 
         FileCodeWriter(
-            writerConfiguration,
-            "${modelAccessor.className}.${context.generatorFileExtension}",
+            buildPath("${modelAccessor.className}.${context.generatorFileExtension}", context),
         ).writeResult(
             compiled.apply(modelAccessor),
             context,
         )
     }
+
+    private fun buildPath(
+        fileName: String,
+        context: PipelineContext,
+    ): String =
+        context.outputDir.split("/")
+            .plus(context.sourceDir.split("/"))
+            .plus(context.packageName.split("."))
+            .plus(listOf(fileName))
+            .joinToString("/")
 }

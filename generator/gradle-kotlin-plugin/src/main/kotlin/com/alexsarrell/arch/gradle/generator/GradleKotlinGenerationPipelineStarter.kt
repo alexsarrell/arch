@@ -41,5 +41,6 @@ class GradleKotlinGenerationPipelineStarter : GradleGenerationPipelineStarter {
         context.generateModelDocs = task.generateModelDocs.getOrElse(false)
         context.modelDocsOutputDir = task.modelDocsOutputDir.getOrElse("${task.project.projectDir}/docs")
         context.modelDocType = DocType.MARKDOWN.templateName
+        context.sourceDir = "src/main/kotlin"
     }
 }

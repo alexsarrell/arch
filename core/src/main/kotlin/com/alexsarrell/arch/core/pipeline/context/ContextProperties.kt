@@ -2,6 +2,8 @@ package com.alexsarrell.arch.core.pipeline.context
 
 var PipelineContext.outputDir: String by ContextProperty("outputDir")
 
+var PipelineContext.sourceDir: String by ContextProperty("sourceDir")
+
 var PipelineContext.packageName: String by ContextProperty("packageName")
 
 var PipelineContext.templateDir: String? by ContextProperty("templateDir")
