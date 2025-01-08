@@ -20,22 +20,37 @@ import com.github.jknack.handlebars.io.FileTemplateLoader
  * ctor resource prefix
  *
  */
-class BasicGenerator : AbstractGenerator("/templates") {
-
+class BasicGenerator(context: PipelineContext) : AbstractGenerator("/templates") {
+    
+    init {
+        if (context.templateDir != null) {
+            handlebars.with(FileTemplateLoader(context.pipelineContext.templateDir))
+        }
+    }
+    
+    override fun compile(
+        schema: ClassSchema,
+        context: PipelineContext,
+    ) {
+        handlebars.compile(
+            schema.second.type.name.lowercase(),
+            )
+    }
 }
 
 abstract class AbstractGenerator(templatesPrefix: String) : CodeGenerator {
-    private val handlebars =
+    protected val handlebars =
         Handlebars()
             .apply {
                 with(ClassPathTemplateLoader(templatesPrefix, ".hbs"))
             }
 
-    override fun generate(context: ParsePipeContext) {
-        if (context.pipelineContext.templateDir != null) {
-            handlebars.with(FileTemplateLoader(context.pipelineContext.templateDir))
-        }
+    protected abstract fun compile(
+        schema: ClassSchema,
+        context: PipelineContext,
+    )
 
+    override fun generate(context: ParsePipeContext) {
         context.specs.forEach { spec ->
             spec.schemas.forEach {
                 generateSchema(it.key to it.value, context.pipelineContext)
@@ -47,11 +62,7 @@ abstract class AbstractGenerator(templatesPrefix: String) : CodeGenerator {
         schema: ClassSchema,
         context: PipelineContext,
     ) {
-        val compiled =
-            handlebars.compile(
-                schema.second.type.name
-                    .lowercase(),
-            )
+        val compiled = compile(schema, context)
 
         val modelAccessor =
             ModelAccessor(schema, context)
