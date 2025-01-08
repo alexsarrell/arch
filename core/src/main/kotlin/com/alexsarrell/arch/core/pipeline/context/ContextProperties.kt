@@ -1,5 +1,7 @@
 package com.alexsarrell.arch.core.pipeline.context
 
+import com.alexsarrell.arch.core.model.DocType
+
 var PipelineContext.outputDir: String by ContextProperty("outputDir")
 
 var PipelineContext.sourceDir: String by ContextProperty("sourceDir")
@@ -24,4 +26,4 @@ var PipelineContext.generateModelDocs: Boolean by ContextProperty("generateModel
 
 var PipelineContext.modelDocsOutputDir: String by ContextProperty("modelDocsOutputDir")
 
-var PipelineContext.modelDocType: String by ContextProperty("modelDocType")
+var PipelineContext.modelDocType: DocType by ContextProperty("modelDocType")

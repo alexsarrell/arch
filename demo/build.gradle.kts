@@ -14,6 +14,7 @@ tasks.register<ArchGenerateTask>("archGenerate") {
     doNotTrackState("If you want to always regenerate model classes")
     specSource.set("${project.projectDir}")
     outputDir.set("${project.layout.buildDirectory.get()}/generated")
+    generateModelDocs.set(true)
     packageName.set("com.alexsarrell.demo")
 }
 

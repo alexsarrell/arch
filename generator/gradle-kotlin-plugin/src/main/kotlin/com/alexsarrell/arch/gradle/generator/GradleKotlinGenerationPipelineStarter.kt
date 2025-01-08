@@ -4,6 +4,7 @@ import com.alexsarrell.arch.core.pipeline.pipe.impl.GeneratePipe
 import com.alexsarrell.arch.gradle.api.GradleGenerationPipelineStarter
 import com.alexsarrell.arch.core.pipeline.pipe.impl.ParsePipe
 import com.alexsarrell.arch.core.generator.BasicGenerator
+import com.alexsarrell.arch.core.generator.DocumentationGenerator
 import com.alexsarrell.arch.core.model.DocType
 import com.alexsarrell.arch.core.parser.BasicYamlParser
 import com.alexsarrell.arch.core.pipeline.*
@@ -16,15 +17,17 @@ class GradleKotlinGenerationPipelineStarter : GradleGenerationPipelineStarter {
     private val pipeline: GenerationPipeline = BasicGenerationPipeline()
     private val context: PipelineContext = pipeline.context
     private val parser: BasicYamlParser = BasicYamlParser()
-    private val generator: BasicGenerator = BasicGenerator()
+    private val docsGenerator: DocumentationGenerator = DocumentationGenerator()
 
     override fun runPipeline(task: ArchGenerateTask) {
         fillContextStartParams(task)
+        val codeGenerator = BasicGenerator(context)
 
         pipeline.generate {
-            process(LoadPipe(context, task))
-            process(ParsePipe(context, parser))
-            if (context.generateModel) process(GeneratePipe(generator))
+            process(LoadPipe(task))
+            process(ParsePipe(parser))
+            if (context.generateModel) process(GeneratePipe(codeGenerator))
+            if (context.generateModelDocs) process(GeneratePipe(docsGenerator))
         }
     }
 
@@ -40,7 +43,7 @@ class GradleKotlinGenerationPipelineStarter : GradleGenerationPipelineStarter {
         context.metadataAccessors = task.metadataAccessors.getOrElse(true)
         context.generateModelDocs = task.generateModelDocs.getOrElse(false)
         context.modelDocsOutputDir = task.modelDocsOutputDir.getOrElse("${task.project.projectDir}/docs")
-        context.modelDocType = DocType.MARKDOWN.templateName
+        context.modelDocType = DocType.MARKDOWN
         context.sourceDir = "src/main/kotlin"
     }
 }

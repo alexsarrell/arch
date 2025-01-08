@@ -12,22 +12,28 @@ import com.alexsarrell.arch.gradle.api.tasks.ArchGenerateTask
 import com.alexsarrell.arch.gradle.api.util.loadResourceLines
 
 class LoadPipe(
-    context: PipelineContext,
     private val task: ArchGenerateTask,
 ) : StandalonePipe() {
-    override val pipeContext: PipeContext = LoadPipeContext(context)
+    private lateinit var pipeContext: LoadPipeContext
+
+    override fun pipeContext(): PipeContext {
+        return pipeContext
+    }
 
     private val accessor = FileLoaderAccessor(
         listOf(ConfigurationFileLoader, RootFileLoader)
     )
 
-    override fun process() {
-        pipeContext as LoadPipeContext
+    override fun PipelineContext.process() {
+        pipeContext = LoadPipeContext(this)
+
         val specSource = task.specSource.get()
+
         val loaderIgnore =
             loadResourceLines(LOADER_IGNORE_RESOURCE)
                 .plus(task.loaderIgnore.getOrElse(listOf()))
                 .map { it.toRegex() }
+
         pipeContext.specFiles =
             accessor.getLoader(specSource).get(specSource, task.project)
                 .filter { file ->

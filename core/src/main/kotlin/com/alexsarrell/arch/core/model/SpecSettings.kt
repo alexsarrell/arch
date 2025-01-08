@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SpecSettings(
-    val name: String,
-    val summary: String = "",
+    val name: String = "",
+    val title: String = "",
     val description: String = "",
 )
