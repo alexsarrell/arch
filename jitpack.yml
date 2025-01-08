@@ -1,4 +1,5 @@
 install:
+  - chmod +x gradlew
   - ./gradlew :core:publishToMavenLocal
   - ./gradlew :generator:gradle-api
   - ./gradlew :generator:kotlin
