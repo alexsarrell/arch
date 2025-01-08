@@ -5,7 +5,7 @@ plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
     `maven-publish`
-    id("com.alexsarrell.arch.generator") version "1.0.0"
+    id("com.alexsarrell.arch.generator") version "1.0.0" apply false
 }
 
 group = "com.alexsarrell.arch"
