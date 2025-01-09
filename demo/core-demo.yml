@@ -20,9 +20,9 @@ schemas:
         required: true
         version: 1.0.0
       metadata:
-        type: String
+        type: Map<String, Any>
         description: Metadata of the event
-        default: emptyMap<String, Any>
+        defaultValue: emptyMap()
         required: true
         version: 1.0.0
       event:

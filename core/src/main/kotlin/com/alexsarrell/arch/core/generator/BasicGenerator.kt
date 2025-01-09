@@ -20,10 +20,10 @@ import com.github.jknack.handlebars.io.FileTemplateLoader
 import java.io.File
 import java.io.FileWriter
 
-class BasicGenerator(context: PipelineContext) : AbstractGenerator("/templates") {
+class BasicGenerator(templateDir: String?) : AbstractGenerator("/templates") {
     init {
-        if (context.templateDir != null) {
-            handlebars.with(FileTemplateLoader(context.templateDir))
+        if (templateDir != null) {
+            handlebars.with(FileTemplateLoader(templateDir))
         }
     }
 

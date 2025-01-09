@@ -8,11 +8,12 @@
 ### {{@key}} - {{description}}
 ### Текущая версия: {{version}}
 
-| Имя свойства | Тип | Описание | Required | Example value | Since |
+
+| Имя свойства | Тип | Описание | Required | Example value | Версия |
 |--------------|-----|----------|----------|---------------|-------|
 {{#each properties}}| {{@key}} | {{type}} | {{description}} | {{required}} | {{exampleValue}} | {{version}} |
 {{/each}}
-#### JSON example
+### JSON пример
 ```json
 { {{#each properties}}
     "{{@key}}": {{{jsonFormatted exampleValue}}}{{#unless @last}},{{/unless}}{{/each}}

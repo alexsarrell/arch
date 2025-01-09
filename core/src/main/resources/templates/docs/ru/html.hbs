@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{#if settings.title}}{{settings.title}}{{else}}{{settings.name}}{{/if}}</title>
+</head>
+<body>
+<h1>{{#if settings.title}}{{settings.title}}{{else}}{{settings.name}}{{/if}}</h1>
+
+<h2>Основные положения документа</h2>
+<p>{{settings.description}}</p>
+
+<h3>Перечень моделей</h3>
+{{#each schemas}}
+<h4>{{@key}} - {{description}}</h4>
+<p>Текущая версия: {{version}}</p>
+<table border="1">
+    <tr>
+        <th>Имя свойства</th>
+        <th>Тип</th>
+        <th>Описание</th>
+        <th>Required</th>
+        <th>Example value</th>
+        <th>Версия</th>
+    </tr>
+    {{#each properties}}
+    <tr>
+        <th>{{@key}}</th>
+        <th>{{type}}</th>
+        <th>{{description}}</th>
+        <th>{{required}}</th>
+        <th>{{exampleValue}}</th>
+        <th>{{version}}</th>
+    </tr>
+    {{/each}}
+</table>
+<h4>JSON пример</h4>
+<pre>
+{ {{#each properties}}
+    "{{@key}}": {{{jsonFormatted exampleValue}}}{{#unless @last}},{{/unless}}{{/each}}
+}
+</pre>
+{{/each}}
+</body>
+</html>

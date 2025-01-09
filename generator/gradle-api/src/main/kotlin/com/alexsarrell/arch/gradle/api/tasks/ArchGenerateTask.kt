@@ -58,6 +58,14 @@ abstract class ArchGenerateTask : DefaultTask() {
     @get:Optional
     abstract val modelDocsOutputDir: Property<String>
 
+    @get:Input
+    @get:Optional
+    abstract val modelDocsFormat: ListProperty<String>
+
+    @get:Input
+    @get:Optional
+    abstract val modelDocsLocale: Property<String>
+
     @get:Internal
     abstract val pipelineStarter: Property<GradleGenerationPipelineStarter>
 

@@ -1,0 +1,21 @@
+# {{#if settings.title}}{{settings.title}}{{else}}{{settings.name}}{{/if}}
+
+## Document Description
+{{settings.description}}
+
+## List of Models
+{{#each schemas}}
+### {{@key}} - {{description}}
+#### Current Version: {{version}}
+
+| Property Name | Type | Description | Required | Example Value | Version |
+|---------------|------|-------------|----------|---------------|---------|
+{{#each properties}}| {{@key}} | {{type}} | {{description}} | {{required}} | {{exampleValue}} | {{version}} |
+{{/each}}
+### JSON Example
+```json
+{ {{#each properties}}
+    "{{@key}}": {{{jsonFormatted exampleValue}}}{{#unless @last}},{{/unless}}{{/each}}
+}
+```
+{{/each}}
