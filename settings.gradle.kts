@@ -7,8 +7,6 @@ include(
     ":generator:gradle-kotlin-plugin",
 )
 findProject("generator:kotlin")?.name = "generator-kotlin"
-include(":demo")
-findProject(":demo")?.name = "demo"
 
 pluginManagement {
     repositories {

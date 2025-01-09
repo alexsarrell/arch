@@ -1,0 +1,6 @@
+install:
+  - chmod +x gradlew
+  - ./gradlew :core:publishToMavenLocal
+  - ./gradlew :generator:gradle-api:publishToMavenLocal
+  - ./gradlew :generator:kotlin:publishToMavenLocal
+  - ./gradlew :generator:gradle-kotlin-plugin:publishToMavenLocal
