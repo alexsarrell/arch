@@ -5,7 +5,6 @@ plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
     `maven-publish`
-    id("com.alexsarrell.arch.generator") version "1.0.0"
 }
 
 group = "com.alexsarrell.arch"
@@ -38,7 +37,7 @@ publishing {
     }
 }
 
-tasks.named("build") {
+tasks.named("publishToMavenLocal") {
     dependsOn(":core:publishToMavenLocal")
     dependsOn(":generator:gradle-api:publishToMavenLocal")
     dependsOn(":generator:kotlin:publishToMavenLocal")

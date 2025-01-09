@@ -32,6 +32,6 @@ publishing {
     }
 }
 
-tasks.named("build") {
+tasks.named("publishToMavenLocal") {
     dependsOn(":core:publishToMavenLocal")
 }
