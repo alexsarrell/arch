@@ -15,6 +15,7 @@ tasks.register<ArchGenerateTask>("archGenerate") {
     specSource.set("${project.projectDir}")
     outputDir.set("${project.layout.buildDirectory.get()}/generated")
     generateModelDocs.set(true)
+    modelDocsFormat.set(listOf("markdown"))
     packageName.set("com.alexsarrell.demo")
 }
 
