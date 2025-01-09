@@ -1,5 +1,7 @@
 settings:
   name: core
+  title: Core analytics
+  description: В данном документе представлены основные абстрактные модели аналитики
 
 schemas:
   AnalyticsDocument:
@@ -10,6 +12,7 @@ schemas:
         type: String
         description: Name of the event
         required: true
+        exampleValue: helloWorld
         version: 1.0.0
       accountId:
         type: UUID
@@ -17,9 +20,9 @@ schemas:
         required: true
         version: 1.0.0
       metadata:
-        type: String
+        type: Map<String, Any>
         description: Metadata of the event
-        default: emptyMap<String, Any>
+        defaultValue: emptyMap()
         required: true
         version: 1.0.0
       event:

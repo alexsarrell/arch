@@ -1,0 +1,22 @@
+# {{#if settings.title}}{{settings.title}}{{else}}{{settings.name}}{{/if}}
+
+## Описание документа
+{{settings.description}}
+
+## Перечень моделей
+{{#each schemas}}
+### {{@key}} - {{description}}
+### Текущая версия: {{version}}
+
+
+| Имя свойства | Тип | Описание | Required | Example value | Версия |
+|--------------|-----|----------|----------|---------------|-------|
+{{#each properties}}| {{@key}} | {{type}} | {{description}} | {{required}} | {{exampleValue}} | {{version}} |
+{{/each}}
+### JSON пример
+```json
+{ {{#each properties}}
+    "{{@key}}": {{{jsonFormatted exampleValue}}}{{#unless @last}},{{/unless}}{{/each}}
+}
+```
+{{/each}}

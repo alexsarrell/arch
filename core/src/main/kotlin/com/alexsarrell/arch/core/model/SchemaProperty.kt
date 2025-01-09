@@ -8,5 +8,6 @@ data class SchemaProperty(
     val description: String?,
     val type: String,
     val version: String,
+    val exampleValue: String? = null,
     val defaultValue: String? = null,
 )

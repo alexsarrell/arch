@@ -11,16 +11,18 @@ class GenerationFlowDefinition(
 ) {
     @Suppress("UNCHECKED_CAST")
     fun process(pipe: Pipe) {
-        if (pipe.pipeContext != null) {
-            context.register(pipe)
-        }
         when (pipe) {
-            is StandalonePipe -> pipe.process()
+            is StandalonePipe -> context.run {
+                pipe.run { process() }
+            }
             is ChildPipe<*> -> {
                 val parentContext = context.getContext(pipe.parentContext)
-                (pipe as ChildPipe<PipeContext>).process(parentContext)
+                context.run {
+                    (pipe as ChildPipe<PipeContext>).run { process(parentContext) }
+                }
             }
             else -> throw IllegalArgumentException("Pipe $pipe type is not supported")
         }
+        pipe.pipeContext()?.let { context.register(pipe) }
     }
 }

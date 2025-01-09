@@ -10,12 +10,16 @@ import com.alexsarrell.arch.core.pipeline.pipe.context.PipeContext
 import com.alexsarrell.arch.core.pipeline.pipe.context.specFiles
 
 class ParsePipe(
-    context: PipelineContext,
     private val parser: SpecParser,
 ) : ChildPipe<LoadPipeContext>(LoadPipeContext::class.java) {
-    override val pipeContext: ParsePipeContext = ParsePipeContext(context)
+    private lateinit var pipeContext: ParsePipeContext
 
-    override fun process(parentContext: LoadPipeContext) {
+    override fun pipeContext(): PipeContext {
+        return pipeContext
+    }
+
+    override fun PipelineContext.process(parentContext: LoadPipeContext) {
+        pipeContext = ParsePipeContext(this)
         parser.parse(
             parentContext.specFiles,
             parentContext.pipelineContext.specLimit,

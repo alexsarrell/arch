@@ -2,7 +2,7 @@ class {{className}}({{#each properties}}
     /**
     * @since {{version}}
     */
-    {{#if isOpen}}open {{/if}}val {{name}}: {{type}}{{#unless required}}?{{/unless}}{{#if defaultValue}} = {{defaultValue}}{{/if}},{{/each}}{{#each parentProperties}}
+    {{#if isOpen}}open {{/if}}val {{name}}: {{{type}}}{{#unless required}}?{{/unless}}{{#if defaultValue}} = {{{defaultValue}}}{{/if}},{{/each}}{{#each parentProperties}}
     /**
     * @since {{version}}
     */

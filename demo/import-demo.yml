@@ -1,5 +1,6 @@
 settings:
   name: import-demo
+  description: Import demo file
 
 schemas:
   ChildEventFileImport:
@@ -12,6 +13,7 @@ schemas:
       childProperty:
         type: Instant
         defaultValue: Instant.now()
+        exampleValue: "12.04.2025T11:05:53Z"
         description: Name of the event
         version: 1.0.0
         required: true

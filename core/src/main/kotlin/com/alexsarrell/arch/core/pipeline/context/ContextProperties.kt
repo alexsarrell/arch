@@ -1,6 +1,11 @@
 package com.alexsarrell.arch.core.pipeline.context
 
+import com.alexsarrell.arch.core.model.DocFormat
+import com.alexsarrell.arch.core.model.DocLocale
+
 var PipelineContext.outputDir: String by ContextProperty("outputDir")
+
+var PipelineContext.sourceDir: String by ContextProperty("sourceDir")
 
 var PipelineContext.packageName: String by ContextProperty("packageName")
 
@@ -22,4 +27,6 @@ var PipelineContext.generateModelDocs: Boolean by ContextProperty("generateModel
 
 var PipelineContext.modelDocsOutputDir: String by ContextProperty("modelDocsOutputDir")
 
-var PipelineContext.modelDocType: String by ContextProperty("modelDocType")
+var PipelineContext.modelDocsFormat: List<DocFormat> by ContextProperty("modelDocsFormat")
+
+var PipelineContext.modelDocsLocale: DocLocale by ContextProperty("modelDocsLocale")
