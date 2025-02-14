@@ -72,6 +72,11 @@ abstract class ArchGenerateTask : DefaultTask() {
     init {
         group = "generation"
         description = "Generates model from specification"
+        doNotTrackState("If you want to always regenerate model classes")
+    }
+
+    final override fun doNotTrackState(reasonNotToTrackState: String) {
+        super.doNotTrackState(reasonNotToTrackState)
     }
 
     @TaskAction

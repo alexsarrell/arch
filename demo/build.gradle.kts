@@ -11,8 +11,8 @@ dependencies {
 }
 
 tasks.register<ArchGenerateTask>("archGenerate") {
-    doNotTrackState("If you want to always regenerate model classes")
     specSource.set("${project.projectDir}")
+    specsLimit.set(listOf("import-demo.yml"))
     outputDir.set("${project.layout.buildDirectory.get()}/generated")
     generateModelDocs.set(true)
     modelDocsFormat.set(listOf("markdown"))

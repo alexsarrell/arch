@@ -34,8 +34,6 @@ abstract class AbstractYamlParser(
                 val parentParseResult = parseFile(parentFile, context)
                 schema.parent.resolveRef(parentParseResult)
             }
-
-            context.addSpec(parseResult)
         }
         return parseResult
     }
@@ -54,6 +52,10 @@ abstract class AbstractYamlParser(
                     }
                 }
 
-        files.forEach { parseFile(it, context) }
+        files.forEach {
+            context.addSpec(
+                parseFile(it, context)
+            )
+        }
     }
 }
