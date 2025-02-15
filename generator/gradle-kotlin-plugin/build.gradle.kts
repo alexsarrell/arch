@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.alexsarrell.arch"
-version = "1.0.3"
+version = "1.0.5"
 
 dependencies {
     api(project(":core"))
