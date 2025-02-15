@@ -28,7 +28,7 @@ tasks.register<Jar>("sourcesJar") {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("kotlinPublication") {
             artifactId = "kotlin"
             from(components["java"])
             artifact(tasks["sourcesJar"])

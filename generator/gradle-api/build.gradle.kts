@@ -30,7 +30,7 @@ tasks.register<Jar>("sourcesJar") {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("gradleApiPublication") {
             artifactId = "gradle-api"
             from(components["java"])
             artifact(tasks["sourcesJar"])

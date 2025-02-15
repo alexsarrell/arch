@@ -22,7 +22,7 @@ tasks.register<Jar>("sourcesJar") {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("corePublication") {
             artifactId = "core"
             from(components["java"])
             artifact(tasks["sourcesJar"])
