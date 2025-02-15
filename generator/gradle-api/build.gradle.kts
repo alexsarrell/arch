@@ -23,11 +23,17 @@ gradlePlugin {
     }
 }
 
+tasks.register<Jar>("sourcesJar") {
+    archiveClassifier.set("sources")
+    from(sourceSets.main.get().allSource)
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
             artifactId = "gradle-api"
             from(components["java"])
+            artifact(tasks["sourcesJar"])
         }
     }
 }
