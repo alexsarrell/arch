@@ -5,6 +5,7 @@ plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
     `maven-publish`
+    id("java-gradle-plugin")
 }
 
 group = "com.alexsarrell.arch"
@@ -39,6 +40,11 @@ publishing {
             from(components["java"])
             artifactId = "gradle-kotlin-plugin"
             artifact(tasks["sourcesJar"])
+        }
+    }
+    repositories {
+        maven {
+            url = uri("https://jitpack.io")
         }
     }
 }
