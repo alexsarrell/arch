@@ -37,7 +37,7 @@ publishing {
     publications {
         create<MavenPublication>("gradleKotlinPluginPublication") {
             from(components["java"])
-            artifactId = "generator-gradle-kotlin-plugin"
+            artifactId = "gradle-kotlin-plugin"
             artifact(tasks["sourcesJar"])
         }
     }
