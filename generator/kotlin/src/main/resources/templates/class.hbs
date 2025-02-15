@@ -6,7 +6,7 @@ class {{className}}({{#each properties}}
     /**
     * @since {{version}}
     */
-    override val {{name}}: {{type}}{{#unless required}}?{{/unless}}{{#if defaultValue}} = {{defaultValue}}{{/if}},{{/each}}
+    override val {{name}}: {{{type}}}{{#unless required}}?{{/unless}}{{#if defaultValue}} = {{{defaultValue}}}{{/if}},{{/each}}
 ){{#if parent}}: {{parent}}({{#each parentProperties}}
     {{name}} = {{name}},{{/each}}
 ){{/if}}

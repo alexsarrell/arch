@@ -44,7 +44,7 @@ data class ModelAccessor(
             parentProperties = schema.second.extractParentFields().toModelProperties(),
             packageName = context.packageName,
             isOpen = schema.second.isOpen(),
-            imports = schema.second.imports(context),
+            imports = schema.second.imports(context).distinct(),
             metadata = schema.second.metadata?.toMetadataEntry(),
             description = schema.second.description,
             metadataAccessors = context.metadataAccessors,
