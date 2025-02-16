@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 enum class SchemaType {
     @SerialName("data") DATA,
     @SerialName("abstract") ABSTRACT,
-    @SerialName("class") CLASS,
+    @SerialName("open") OPEN,
 }

@@ -48,7 +48,13 @@ abstract class AbstractYamlParser(
                 .let { files ->
                     if (specsLimit.isEmpty()) return@let files
                     files.filter { file ->
-                        specsLimit.any { file.path.endsWith(it) }
+                        specsLimit.any {
+                            file.name == it
+                        }
+                    }.also {
+                        if (it.isEmpty()) {
+                            throw IllegalArgumentException("No files matching specified limit: $specsLimit")
+                        }
                     }
                 }
 

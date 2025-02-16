@@ -86,7 +86,7 @@ private fun Schema.imports(context: PipelineContext): List<String> {
 
 private fun Schema.isOpen(): Boolean {
     return when (type) {
-        SchemaType.ABSTRACT -> true
+        SchemaType.ABSTRACT, SchemaType.OPEN -> true
         else -> false
     }
 }

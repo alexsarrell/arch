@@ -6,9 +6,11 @@ plugins {
     `java-gradle-plugin`
     `maven-publish`
     id("java-gradle-plugin")
+    id("com.gradle.plugin-publish") version "1.3.1"
 }
 
 group = "com.alexsarrell.arch"
+version = "1.0.0"
 
 dependencies {
     api(project(":core"))
@@ -20,17 +22,19 @@ dependencies {
 }
 
 gradlePlugin {
+    website = "https://github.com/alexsarrell/arch"
+    vcsUrl = "https://github.com/alexsarrell/arch.git"
+
     plugins {
         create("archKotlinPlugin") {
             id = "com.alexsarrell.arch.generator.kotlin.plugin"
+            displayName = "ARCH Kotlin Gradle Plugin"
             implementationClass = "com.alexsarrell.arch.gradle.plugin.KotlinPluginModule"
+            description =
+                "A Gradle plugin for ARCH library. Use it to generate Kotlin classes for analytics using ARCH specification."
+            tags = listOf("arch", "codegen", "kotlin")
         }
     }
-}
-
-tasks.register<Jar>("sourcesJar") {
-    archiveClassifier.set("sources")
-    from(sourceSets.main.get().allSource)
 }
 
 publishing {
@@ -38,14 +42,12 @@ publishing {
         create<MavenPublication>("gradleKotlinPluginPublication") {
             from(components["java"])
             artifactId = "gradle-kotlin-plugin"
-            artifact(tasks["sourcesJar"])
         }
     }
     repositories {
         maven {
             url = uri("https://jitpack.io")
         }
-        uri("https://jitpack.io")
     }
 }
 
