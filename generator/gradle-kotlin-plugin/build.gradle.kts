@@ -9,7 +9,6 @@ plugins {
 }
 
 group = "com.alexsarrell.arch"
-version = "1.0.5"
 
 dependencies {
     api(project(":core"))
@@ -46,6 +45,7 @@ publishing {
         maven {
             url = uri("https://jitpack.io")
         }
+        uri("https://jitpack.io")
     }
 }
 

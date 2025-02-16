@@ -20,12 +20,15 @@ object ConfigurationFileLoader : FileLoader {
         project: Project,
     ): Set<File> {
         val configuration = Configuration(basePath)
-        val specJar =
+        val dependencies =
             project.configurations
                 .filter { it.isCanBeResolved }
                 .flatMap { it.resolve() }
-                .find { it.path.contains(configuration.name) }
-                ?: throw GradleException("Dependency $basePath is not found")
+
+        val specJar =
+            dependencies.find {
+                    configuration.pattern.containsMatchIn(it.path)
+                } ?: throw GradleException("Dependency $basePath is not found")
 
         val specs =
             project
@@ -40,13 +43,13 @@ object ConfigurationFileLoader : FileLoader {
     }
 
     private class Configuration(
-        val name: String,
+        val pattern: Regex,
         val filePath: String = "",
     ) {
         constructor(uri: String) : this(
             uri.split(":/").first()
-                .replace(".", File.separator)
-                .replace(":", File.separator),
+                .replace(":", "[\\\\/]+")
+                .toRegex(),
             uri.split(":/").getOrElse(1) { "" },
         )
     }
