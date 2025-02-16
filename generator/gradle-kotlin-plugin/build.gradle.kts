@@ -31,7 +31,10 @@ gradlePlugin {
             displayName = "ARCH Kotlin Gradle Plugin"
             implementationClass = "com.alexsarrell.arch.gradle.plugin.KotlinPluginModule"
             description =
-                "A Gradle plugin for ARCH library. Use it to generate Kotlin classes for analytics using ARCH specification."
+                "A Gradle plugin for ARCH library. Use it to generate Kotlin classes and docs for analytics using ARCH specification. See examples of usage at https://github.com/alexsarrell/arch/tree/master/demo"
+
+            website = "https://github.com/alexsarrell/arch"
+            vcsUrl = "https://github.com/alexsarrell/arch.git"
             tags = listOf("arch", "codegen", "kotlin")
         }
     }
