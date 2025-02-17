@@ -8,4 +8,5 @@ enum class SchemaType {
     @SerialName("data") DATA,
     @SerialName("abstract") ABSTRACT,
     @SerialName("open") OPEN,
+    @SerialName("enum") ENUM,
 }

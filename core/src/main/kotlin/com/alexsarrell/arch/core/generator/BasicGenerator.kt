@@ -1,5 +1,6 @@
 package com.alexsarrell.arch.core.generator
 
+import com.alexsarrell.arch.core.generator.helper.IsEmptyHelper
 import com.alexsarrell.arch.core.model.Spec
 import com.alexsarrell.arch.core.model.accessor.ModelAccessor
 import com.alexsarrell.arch.core.pipeline.context.PipelineContext
@@ -7,24 +8,18 @@ import com.alexsarrell.arch.core.pipeline.context.generatorFileExtension
 import com.alexsarrell.arch.core.pipeline.context.outputDir
 import com.alexsarrell.arch.core.pipeline.context.packageName
 import com.alexsarrell.arch.core.pipeline.context.sourceDir
-import com.alexsarrell.arch.core.pipeline.context.templateDir
 import com.alexsarrell.arch.core.pipeline.pipe.context.ClassSchema
-import com.alexsarrell.arch.core.pipeline.pipe.context.ParsePipeContext
-import com.alexsarrell.arch.core.pipeline.pipe.context.specs
 import com.alexsarrell.arch.core.util.build
 import com.alexsarrell.arch.core.util.writeToFile
-import com.github.jknack.handlebars.Handlebars
-import com.github.jknack.handlebars.Template
-import com.github.jknack.handlebars.io.ClassPathTemplateLoader
 import com.github.jknack.handlebars.io.FileTemplateLoader
 import java.io.File
-import java.io.FileWriter
 
 class BasicGenerator(templateDir: String?) : AbstractGenerator("/templates") {
     init {
         if (templateDir != null) {
             handlebars.with(FileTemplateLoader(templateDir))
         }
+        handlebars.registerHelper("isEmpty", IsEmptyHelper())
     }
 
     override fun PipelineContext.generateSpec(spec: Spec) {

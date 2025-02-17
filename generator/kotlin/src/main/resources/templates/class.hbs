@@ -9,5 +9,9 @@ class {{className}}({{#each properties}}
     override val {{name}}: {{{type}}}{{#unless required}}?{{/unless}}{{#if defaultValue}} = {{{defaultValue}}}{{/if}},{{/each}}
 ){{#if parent}}: {{parent}}({{#each parentProperties}}
     {{name}} = {{name}},{{/each}}
-){{/if}}
+){{/if}} {{#unless (isEmpty enum)}} {
+    enum class {{className}}Enum { {{#each enum}}
+        {{this}},{{/each}}
+    }
+}{{/unless}}
 {{#if metadataAccessors}}{{> metadata-accessor}}{{/if}}

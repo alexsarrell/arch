@@ -8,7 +8,8 @@ import kotlinx.serialization.Serializable
 data class Schema(
     val description: String,
     val type: SchemaType,
-    val properties: Map<String, SchemaProperty>,
+    val properties: Map<String, SchemaProperty> = mapOf(),
+    val enum: List<String> = listOf(),
     @Serializable(with = ParentRefSerializer::class)
     val parent: ParentRef? = null,
     val metadata: Map<String, String>? = null,
