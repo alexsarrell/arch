@@ -4,7 +4,7 @@ import com.github.jknack.handlebars.io.FileTemplateLoader
 import io.github.alexsarrell.arch.core.generator.helper.IsEmptyHelper
 import io.github.alexsarrell.arch.core.model.Spec
 import io.github.alexsarrell.arch.core.model.TaskContext
-import io.github.alexsarrell.arch.core.model.accessor.ModelAccessor
+import io.github.alexsarrell.arch.core.model.accessor.ObjectTemplateData
 import io.github.alexsarrell.arch.core.pipeline.context.generatorFileExtension
 import io.github.alexsarrell.arch.core.pipeline.context.sourceDir
 import io.github.alexsarrell.arch.core.pipeline.pipe.context.ClassSchema
@@ -31,19 +31,19 @@ class BasicGenerator(
 
     private fun generateSchema(schema: ClassSchema) {
         val template = handlebars.compile(schema.value.type.name.lowercase())
-        val modelAccessor = ModelAccessor(schema, context)
-        val file = File(buildPath(modelAccessor)).build()
+        val objectTemplateData = ObjectTemplateData(schema.key, schema.value, context)
+        val file = File(buildPath(objectTemplateData)).build()
 
-        template.writeToFile(modelAccessor, file)
+        template.writeToFile(objectTemplateData, file)
     }
 
-    private fun buildPath(modelAccessor: ModelAccessor): String =
+    private fun buildPath(objectTemplateData: ObjectTemplateData): String =
         context.run {
             outputDir
                 .split("/", "\\")
                 .plus(sourceDir.split("/", "\\"))
                 .plus(packageName.split("."))
-                .plus("${modelAccessor.className}.$generatorFileExtension")
+                .plus("${objectTemplateData.className}.$generatorFileExtension")
                 .joinToString(File.separator)
         }
 }

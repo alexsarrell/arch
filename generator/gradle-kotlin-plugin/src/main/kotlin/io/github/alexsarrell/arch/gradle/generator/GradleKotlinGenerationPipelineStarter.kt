@@ -10,28 +10,38 @@ import io.github.alexsarrell.arch.core.pipeline.pipe.impl.ParsePipe
 import io.github.alexsarrell.arch.gradle.api.GradleGenerationPipelineStarter
 import io.github.alexsarrell.arch.core.model.TaskContext
 import io.github.alexsarrell.arch.core.pipeline.helper.GenerationFlowDefinition
+import io.github.alexsarrell.arch.core.pipeline.pipe.context.LoadPipeContext
+import io.github.alexsarrell.arch.gradle.api.io.ConfigurationFileLoader
+import io.github.alexsarrell.arch.gradle.api.io.FileLoaderAccessor
+import io.github.alexsarrell.arch.gradle.api.io.RootFileLoader
 import io.github.alexsarrell.arch.gradle.api.pipeline.pipe.LoadPipe
+import org.gradle.api.Project
 
-class GradleKotlinGenerationPipelineStarter : GradleGenerationPipelineStarter {
+class GradleKotlinGenerationPipelineStarter(
+    private val project: Project,
+) : GradleGenerationPipelineStarter {
     private val context: PipelineContext = BasicPipelineContext()
-    private val pipeline: GenerationPipeline = BasicGenerationPipeline(GenerationFlowDefinition())
     private val parser: BasicYamlParser = BasicYamlParser()
 
-    override fun runPipeline(task: TaskContext) {
-        fillContextStartParams(task)
-        val codeGenerator = BasicGenerator(task)
-        val docsGenerator = DocumentationGenerator(context)
+    override fun runPipeline(context: TaskContext) {
+        fillContextStartParams(context)
+        val accessor = FileLoaderAccessor(listOf(ConfigurationFileLoader(project), RootFileLoader))
+        val codeGenerator = BasicGenerator(context)
+        val docsGenerator = DocumentationGenerator(this@GradleKotlinGenerationPipelineStarter.context)
+        val pipeline = BasicGenerationPipeline(GenerationFlowDefinition(context))
 
         pipeline.generate {
-            process(LoadPipe(context))
-            process(ParsePipe(parser))
-            if (context.generateModel) process(GeneratePipe(codeGenerator))
-            if (context.generateModelDocs) process(GeneratePipe(docsGenerator))
+            process(LoadPipe(accessor)) {
+                process(ParsePipe(parser), it) {
+                    if (context.generateModel) process(GeneratePipe(codeGenerator), it)
+                    if (context.generateModelDocs) process(GeneratePipe(docsGenerator), it)
+                }
+            }
         }
     }
 
-    private fun fillContextStartParams(task: TaskContext) {
-        task.generatorFileExtension = "kt"
-        task.sourceDir = "src/main/kotlin"
+    private fun fillContextStartParams(context: TaskContext) {
+        context.generatorFileExtension = "kt"
+        context.sourceDir = "src/main/kotlin"
     }
 }

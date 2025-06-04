@@ -11,7 +11,7 @@ fun TaskContext.Companion.build(task: ArchGenerateTask): TaskContext {
         task.specsLimit.get(),
         task.importMappings.get(),
         task.metadataAccessors.getOrElse(true),
-        task.loaderIgnore.get(),
+        task.loaderIgnore.getOrElse(listOf()),
         task.outputDir.get(),
         task.templateDir.orNull,
         task.packageName.get(),

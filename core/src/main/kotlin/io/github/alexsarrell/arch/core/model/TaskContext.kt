@@ -1,6 +1,6 @@
 package io.github.alexsarrell.arch.core.model
 
-import io.github.alexsarrell.arch.core.pipeline.context.BasicContextHolder
+import io.github.alexsarrell.arch.core.pipeline.context.ContextHolder
 
 data class TaskContext(
     val specSource: String,
@@ -16,6 +16,8 @@ data class TaskContext(
     val modelDocsOutputDir: String,
     val modelDocsFormat: DocFormat,
     val modelDocsLocale: DocLocale,
-) : BasicContextHolder() {
+) : ContextHolder {
+    override val context: MutableMap<String, Any?> = mutableMapOf()
+
     companion object
 }

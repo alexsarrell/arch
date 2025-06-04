@@ -5,7 +5,9 @@ import org.gradle.api.GradleException
 import org.gradle.api.Project
 import java.io.File
 
-object ConfigurationFileLoader : FileLoader {
+class ConfigurationFileLoader(
+    private val project: Project,
+) : FileLoader {
     private val configurationPattern = "^[a-zA-Z0-9_.-]+:[a-zA-Z0-9_.-]+(?::/.*)?$".toRegex()
 
     override fun canLoad(filePath: String): Boolean = configurationPattern.matches(filePath)
@@ -17,7 +19,6 @@ object ConfigurationFileLoader : FileLoader {
      */
     override fun get(
         basePath: String,
-        project: Project,
     ): Set<File> {
         val configuration = Configuration(basePath)
         val dependencies =

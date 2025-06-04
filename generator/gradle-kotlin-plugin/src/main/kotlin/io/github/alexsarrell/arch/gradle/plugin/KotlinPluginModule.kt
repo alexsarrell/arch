@@ -13,7 +13,7 @@ class KotlinPluginModule : Plugin<Project> {
 
         project.afterEvaluate {
             project.extensions.configure(ArchExtension::class.java) {
-                pipelineStarter.set(GradleKotlinGenerationPipelineStarter())
+                pipelineStarter.set(GradleKotlinGenerationPipelineStarter(project))
             }
 
             project.tasks.withType(ArchGenerateTask::class.java).configureEach {

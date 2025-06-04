@@ -10,7 +10,7 @@ object RootFileLoader : FileLoader {
         return sourceDir.exists() && sourceDir.isDirectory
     }
 
-    override fun get(basePath: String, project: Project): Set<File> {
+    override fun get(basePath: String): Set<File> {
         val sourceDir = File(basePath)
 
         require(sourceDir.exists()) {

@@ -1,28 +1,30 @@
 package io.github.alexsarrell.arch.core.pipeline.helper
 
-import io.github.alexsarrell.arch.core.pipeline.context.PipelineContext
-import io.github.alexsarrell.arch.core.pipeline.pipe.ChildPipe
-import io.github.alexsarrell.arch.core.pipeline.pipe.Pipe
-import io.github.alexsarrell.arch.core.pipeline.pipe.StandalonePipe
+import io.github.alexsarrell.arch.core.model.TaskContext
+import io.github.alexsarrell.arch.core.pipeline.pipe.AdjacentPipe
+import io.github.alexsarrell.arch.core.pipeline.pipe.FinalPipe
+import io.github.alexsarrell.arch.core.pipeline.pipe.StartPipe
 import io.github.alexsarrell.arch.core.pipeline.pipe.context.PipeContext
 
 class GenerationFlowDefinition(
-    private val context: PipelineContext,
+    private val context: TaskContext,
 ) {
-    @Suppress("UNCHECKED_CAST")
-    fun process(pipe: Pipe) {
-        when (pipe) {
-            is StandalonePipe -> context.run {
-                pipe.run { process() }
-            }
-            is ChildPipe<*> -> {
-                val parentContext = context.getContext(pipe.parentContext)
-                context.run {
-                    (pipe as ChildPipe<PipeContext>).run { process(parentContext) }
-                }
-            }
-            else -> throw IllegalArgumentException("Pipe $pipe type is not supported")
-        }
-        pipe.pipeContext()?.let { context.register(pipe) }
+    fun <T : PipeContext> process(pipe: StartPipe<T>, callback: GenerationFlowDefinition.(T) -> Unit = {}) {
+        callback(pipe.process(context))
+    }
+
+    fun <Input : PipeContext, Result: PipeContext> process(
+        pipe: AdjacentPipe<Input, Result>,
+        context: Input,
+        callback: GenerationFlowDefinition.(Result) -> Unit = {},
+    ) {
+        callback(pipe.process(context))
+    }
+
+    fun <Input : PipeContext> process(
+        pipe: FinalPipe<Input>,
+        context: Input,
+    ) {
+        pipe.process(context)
     }
 }
