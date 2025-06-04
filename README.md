@@ -8,7 +8,7 @@ To use in a project, you need to add the JitPack.io repository, apply the follow
 
 ```kotlin
 plugins {
-    id("com.alexsarrell.arch.generator.kotlin.plugin") version "1.0.0"
+    id("io.github.alexsarrell.generator.kotlin.plugin") version "1.0.0"
 }
 
 repositories {
@@ -20,7 +20,7 @@ add the following dependency:
 
 ```kotlin
 dependencies {
-    api("com.alexsarrell.arch-generator:gradle-kotlin-plugin:1.0.0")
+    api("io.github.alexsarrell-generator:gradle-kotlin-plugin:1.0.0")
 }
 ```
 
@@ -57,7 +57,7 @@ ARCH (Automated Rendering of Code Hierarchies Library) — это библиот
 
 ```kotlin
 plugins {
-    id("com.alexsarrell.arch.generator.kotlin.plugin") version "1.0.0"
+    id("io.github.alexsarrell.generator.kotlin.plugin") version "1.0.0"
 }
 
 repositories {
@@ -69,7 +69,7 @@ repositories {
 
 ```kotlin
 dependencies {
-    api("com.alexsarrell.arch-generator:gradle-kotlin-plugin:1.0.0")
+    api("io.github.alexsarrell-generator:gradle-kotlin-plugin:1.0.0")
 }
 ```
 

@@ -5,7 +5,7 @@ plugins {
     `maven-publish`
 }
 
-group = "com.alexsarrell.arch"
+group = "io.github.alexsarrell"
 version = "1.0.3"
 
 dependencies {
@@ -14,28 +14,9 @@ dependencies {
     implementation(gradleApi())
 }
 
-gradlePlugin {
-    plugins {
-        create("archPlugin") {
-            id = "com.alexsarrell.arch.generator"
-            implementationClass = "com.alexsarrell.arch.gradle.api.plugin.ArchGeneratorPlugin"
-        }
-    }
-}
-
 tasks.register<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("gradleApiPublication") {
-            artifactId = "gradle-api"
-            from(components["java"])
-            artifact(tasks["sourcesJar"])
-        }
-    }
 }
 
 tasks.named("publishToMavenLocal") {

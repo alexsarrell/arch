@@ -21,17 +21,12 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.8")
 }
 
-tasks.register<Jar>("sourcesJar") {
-    archiveClassifier.set("sources")
-    from(sourceSets.main.get().allSource)
-}
-
 publishing {
     publications {
-        create<MavenPublication>("kotlinPublication") {
+        create<MavenPublication>("archKotlinPublication") {
+            groupId = "io.github.alexsarrell.arch"
             artifactId = "kotlin"
             from(components["java"])
-            artifact(tasks["sourcesJar"])
         }
     }
 }

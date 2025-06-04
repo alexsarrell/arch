@@ -15,17 +15,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-compiler:1.8.0")
 }
 
-tasks.register<Jar>("sourcesJar") {
-    archiveClassifier.set("sources")
-    from(sourceSets.main.get().allSource)
-}
-
 publishing {
     publications {
-        create<MavenPublication>("corePublication") {
+        create<MavenPublication>("archCorePublication") {
+            groupId = "io.github.alexsarrell.arch"
             artifactId = "core"
             from(components["java"])
-            artifact(tasks["sourcesJar"])
         }
     }
 }

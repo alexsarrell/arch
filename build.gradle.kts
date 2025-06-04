@@ -13,7 +13,7 @@ tasks.register("publishAllToMavenLocal") {
 }
 
 allprojects {
-    group = "com.alexsarrell.arch"
+    group = "io.github.alexsarrell"
     version = "1.0.0"
 
     repositories {

@@ -9,7 +9,7 @@ plugins {
     id("com.gradle.plugin-publish") version "1.3.1"
 }
 
-group = "com.alexsarrell.arch"
+group = "io.github.alexsarrell"
 
 dependencies {
     api(project(":core"))
@@ -26,9 +26,9 @@ gradlePlugin {
 
     plugins {
         create("archKotlinPlugin") {
-            id = "com.alexsarrell.arch.generator.kotlin.plugin"
+            id = "io.github.alexsarrell.arch-kotlin-plugin"
             displayName = "ARCH Kotlin Gradle Plugin"
-            implementationClass = "com.alexsarrell.arch.gradle.plugin.KotlinPluginModule"
+            implementationClass = "io.github.alexsarrell.arch.gradle.plugin.KotlinPluginModule"
             description =
                 "A Gradle plugin for ARCH library. Use it to generate Kotlin classes and docs for analytics using ARCH specification. See examples of usage at https://github.com/alexsarrell/arch/tree/master/demo"
 
@@ -41,9 +41,10 @@ gradlePlugin {
 
 publishing {
     publications {
-        create<MavenPublication>("gradleKotlinPluginPublication") {
+        create<MavenPublication>("archKotlinPluginPublication") {
+            groupId = "io.github.alexsarrell.arch"
+            artifactId = "arch-kotlin-plugin"
             from(components["java"])
-            artifactId = "gradle-kotlin-plugin"
         }
     }
     repositories {

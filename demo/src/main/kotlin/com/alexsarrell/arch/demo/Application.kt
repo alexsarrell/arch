@@ -1,4 +1,4 @@
-package com.alexsarrell.arch.demo
+package io.github.alexsarrell.arch.demo
 
 import com.alexsarrell.demo.ChildEventFileImport
 import com.alexsarrell.demo.name
