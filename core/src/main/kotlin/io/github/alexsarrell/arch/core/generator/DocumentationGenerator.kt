@@ -2,18 +2,14 @@ package io.github.alexsarrell.arch.core.generator
 
 import io.github.alexsarrell.arch.core.generator.helper.JsonFormatHelper
 import io.github.alexsarrell.arch.core.model.DocFormat
-import io.github.alexsarrell.arch.core.model.DocLocale
 import io.github.alexsarrell.arch.core.model.Spec
-import io.github.alexsarrell.arch.core.pipeline.context.PipelineContext
-import io.github.alexsarrell.arch.core.pipeline.context.modelDocsFormat
-import io.github.alexsarrell.arch.core.pipeline.context.modelDocsLocale
-import io.github.alexsarrell.arch.core.pipeline.context.modelDocsOutputDir
+import io.github.alexsarrell.arch.core.model.TaskContext
 import io.github.alexsarrell.arch.core.util.build
 import io.github.alexsarrell.arch.core.util.writeToFile
 import java.io.File
 
 class DocumentationGenerator(
-    context: PipelineContext,
+    context: TaskContext,
 ) : AbstractGenerator(
         "/templates/docs/${context.modelDocsLocale.dir}",
         context,
@@ -23,7 +19,7 @@ class DocumentationGenerator(
     }
 
     override fun generateSpec(spec: Spec) {
-        context.modelDocsFormat.forEach { format ->
+        context.modelDocsFormat.let { format ->
             val template = handlebars.compile(format.templateName)
             val file = File(buildPath(spec, format)).build()
 

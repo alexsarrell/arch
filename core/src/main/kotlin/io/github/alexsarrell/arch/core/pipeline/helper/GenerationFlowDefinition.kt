@@ -9,7 +9,10 @@ import io.github.alexsarrell.arch.core.pipeline.pipe.context.PipeContext
 class GenerationFlowDefinition(
     private val context: TaskContext,
 ) {
-    fun <T : PipeContext> process(pipe: StartPipe<T>, callback: GenerationFlowDefinition.(T) -> Unit = {}) {
+    fun <Result : PipeContext> process(
+        pipe: StartPipe<Result>,
+        callback: GenerationFlowDefinition.(Result) -> Unit = {},
+    ) {
         callback(pipe.process(context))
     }
 

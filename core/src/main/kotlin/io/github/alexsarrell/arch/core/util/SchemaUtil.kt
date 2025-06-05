@@ -5,7 +5,8 @@ import io.github.alexsarrell.arch.core.model.SchemaProperty
 import io.github.alexsarrell.arch.core.model.SchemaType
 import io.github.alexsarrell.arch.core.model.TaskContext
 import io.github.alexsarrell.arch.core.model.accessor.ObjectTemplateData.ObjectProperty
-
+import io.github.alexsarrell.arch.core.pipeline.pipe.context.ParsePipeContext
+import io.github.alexsarrell.arch.core.pipeline.pipe.context.importMappings
 
 fun Schema.extractParentFields(): Map<String, SchemaProperty> {
     val fields = mutableMapOf<String, SchemaProperty>()
@@ -21,17 +22,18 @@ fun Schema.extractParentFields(): Map<String, SchemaProperty> {
 }
 
 fun Schema.buildImports(context: TaskContext): List<String> {
-    val propertiesImports = properties.values.mapNotNull { context.importMappings[it.type] }
-    val parentPropertiesImports = extractParentFields().values.mapNotNull { context.importMappings[it.type] }
+    val importMappings = context.importMappings + context.getContext(ParsePipeContext::class.java).importMappings
+    val propertiesImports = properties.values.mapNotNull { importMappings[it.type] }
+    val parentPropertiesImports = extractParentFields().values.mapNotNull { importMappings[it.type] }
+
     return propertiesImports.plus(parentPropertiesImports).plus(imports)
 }
 
-fun Schema.isOpen(): Boolean {
-    return when (type) {
+fun Schema.isOpen(): Boolean =
+    when (type) {
         SchemaType.ABSTRACT, SchemaType.OPEN -> true
         else -> false
     }
-}
 
 fun Map<String, SchemaProperty>.toModelProperties(): List<ObjectProperty> =
     entries.map {

@@ -1,0 +1,15 @@
+import-mappings:
+  OffsetDateTime: java.time.OffsetDateTime
+  LocalDateTime: java.time.LocalDateTime
+  Instant: java.time.Instant
+  UUID: java.util.UUID
+  LocalDate: java.time.LocalDate
+  LocalTime: java.time.LocalTime
+  ZonedDateTime: java.time.ZonedDateTime
+  Date: java.util.Date
+  BigDecimal: java.math.BigDecimal
+  BigInteger: java.math.BigInteger
+  File: java.io.File
+  Path: java.nio.file.Path
+  URL: java.net.URL
+  URI: java.net.URI

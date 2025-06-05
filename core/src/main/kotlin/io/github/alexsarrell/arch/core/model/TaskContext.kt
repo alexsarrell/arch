@@ -19,5 +19,9 @@ data class TaskContext(
 ) : ContextHolder {
     override val context: MutableMap<String, Any?> = mutableMapOf()
 
+    fun <T : ContextHolder> getContext(clazz: Class<T>): T {
+        return clazz.getDeclaredConstructor(TaskContext::class.java).newInstance(this)
+    }
+
     companion object
 }

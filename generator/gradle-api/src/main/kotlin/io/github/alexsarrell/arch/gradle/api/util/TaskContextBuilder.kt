@@ -8,7 +8,7 @@ import io.github.alexsarrell.arch.gradle.api.tasks.ArchGenerateTask
 fun TaskContext.Companion.build(task: ArchGenerateTask): TaskContext {
     return TaskContext(
         task.specSource.get(),
-        task.specsLimit.get(),
+        task.specsLimit.orNull ?: listOf(),
         task.importMappings.get(),
         task.metadataAccessors.getOrElse(true),
         task.loaderIgnore.getOrElse(listOf()),
@@ -17,7 +17,7 @@ fun TaskContext.Companion.build(task: ArchGenerateTask): TaskContext {
         task.packageName.get(),
         task.generateModelDocs.getOrElse(false),
         task.generateModel.getOrElse(true),
-        task.modelDocsOutputDir.get(),
+        task.modelDocsOutputDir.orNull ?: "docs",
         task.modelDocsFormat.orNull?.let { DocFormat.valueOf(it) } ?: DocFormat.MARKDOWN,
         task.modelDocsLocale.orNull?.let { DocLocale.valueOf(it) } ?: DocLocale.EN,
     )

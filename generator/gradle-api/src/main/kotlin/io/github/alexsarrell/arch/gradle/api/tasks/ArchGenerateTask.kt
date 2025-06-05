@@ -72,7 +72,7 @@ abstract class ArchGenerateTask : DefaultTask() {
     abstract val pipelineStarter: Property<GradleGenerationPipelineStarter>
 
     init {
-        group = "generation"
+        group = "arch"
         description = "Generates model from specification"
         doNotTrackState("If you want to always regenerate model classes")
     }
