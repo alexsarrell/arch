@@ -1,3 +1,4 @@
+/*
 import io.github.alexsarrell.arch.gradle.api.tasks.ArchGenerateTask
 
 plugins {
@@ -30,3 +31,4 @@ sourceSets {
         }
     }
 }
+*/
